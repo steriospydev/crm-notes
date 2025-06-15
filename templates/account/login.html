@@ -1,0 +1,42 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title %} CRM | Log In {% endblock %}
+
+{% block content %}
+  
+          <div class="column is-6 is-offset-3">
+            <h1 class="title has-text-centered">
+              Log In
+            </h1>
+            <div class="box">
+              <form method="post" action="{% url 'login' %}" class="section is-warning">
+                {% csrf_token %}
+                {% for field in form %}
+                  <label class="label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                  <p class="control has-icon has-icon-right">
+                    {{ field }}
+                  </p>
+                  {% if form.errors %}
+                    {% for error in field.errors %}
+                      <span class="icon is-small">
+                        <i class="fa fa-warning"></i>
+                      </span>
+                      <span class="help is-danger">{{ error|escape }}</span>
+                    {% endfor %}
+                  {% endif %}
+                {% endfor %}
+
+                <p class="control p-2">
+                  <input type="hidden" name="next" value="{{ next }}" />
+                  <input type="submit" value="Log In" class="button is-dark">
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+{% endblock %}

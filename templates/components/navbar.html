@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg bg-secondary navbar-dark" data-bs-them="dark">
+  <div class="container p-2">
+    <a class="navbar-brand" href="{% url 'notes:index' %}">TOEB - CRM</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">ΣΗΜΕΙΩΣΕΙΣ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">ΠΕΛΑΤΕΣ</a>
+        </li>        
+        {% endif %}
+      </ul>
+        {% if user.is_authenticated %}
+     
+          <form method="post" action="{% url 'logout' %}">
+             {% csrf_token %}
+             <button type="submit" class="btn btn-danger">Αποσύνδεση</button>
+          </form>
+        {% else %}
+            <a class="btn btn-success" href="{% url 'login' %}">Είσοδος</a>
+        {% endif %}
+
+    </div>
+  </div>
+</nav>
+
