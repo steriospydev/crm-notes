@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %} Σημειώσεις {% endblock %}
+{% block title %} Ημερολόγιο Επικοινωνίας {% endblock %}
 
 {% block content %}
 
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" 
+        id="customerModal" 
+        data-bs-backdrop="static" 
+        data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
+        >
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" id="customer-modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" 
-                    class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+                        {% include 'components/customer_form.html' with form=customer_form %}
+                </div>               
             </div>
         </div>
     </div>
@@ -27,8 +27,29 @@
     <!-- APP -->
     <div class="container my-4">
         <div class="row">
-            <h2 class="mb-4">Επικοινωνια Πελατών</h2>
+            <h2 class="mb-4">Ημερολόγιο Επικοινωνίας</h2>
         </div>
+        {% if messages %}  
+        <div class="messages">
+            <div class="alert alert-success alert-dismissible fade show "
+                role="alert">
+                <ul>
+{% for message in messages %}
+                    <li class="{{ message.tags}}">
+                        
+                
+                        {{ message }}
+                    </li>
+
+                    {% endfor %}
+                </ul>
+            
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            
+            
+        </div>
+        {% endif %}
 
         <!-- Δημιουργία Σημείωσης -->
         <div class="container shadow p-4 mb-5 bg-body  text-dark border rounded rounded-3 ">               
@@ -54,7 +75,7 @@
                 <div class="col-md-6">
                     {{ form.customer.label_tag }} 
                     <button type="button" class="ms-3 btn btn-xs btn-outline-success"
-                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            data-bs-toggle="modal" data-bs-target="#customerModal">
                         Νεος 
                     </button> {{ form.customer }}                
                 </div>
@@ -62,9 +83,12 @@
                     {{ form.summary.label_tag }} {{ form.summary }}
                 </div>
                 <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-lg btn-outline-success">
-                        Προσθήκη Σημείωσης
+                    <button type="submit" class="btn btn-lg {%if note_to_update %}btn-warning {% else %} btn-success{% endif %}">
+                        {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Σημείωσης
                     </button>
+                    {% if note_to_update %}
+                        <a class="btn btn-lg btn-danger" href="">Διαγραφή Σημείωσης</a>
+                    {% endif %}
                 </div>
             </form>
         </div>
@@ -120,8 +144,8 @@
                                         <h5 class="card-title">{{ note.customer }}</h5>
                                     </div>
                                     <div class="col-md-6 text-end ">
-                                        <a class="btn btn-outline-secondary rounded-3" href="#">  
-                                            <i class="bi bi-pencil-square"></i> Ενημερωση</a>
+                                        <a class="btn btn-warning bg-gradient rounded-3" href="{{ note.get_absolute_url }}">  
+                                            <i class="bi bi-pencil-square"></i> Επεξεργασία</a>
                                     </div>
                                 </div>
                                 <h6 class="card-subtitle mb-2 text-muted">

@@ -18,3 +18,11 @@
 1. subject = [ 
     
         ]
+
+
+### Update note status
+- html snippet
+<div class="col-md-6 text-end ">
+        <a class="btn btn-outline-secondary rounded-3" href="#">  
+        <i class="bi bi-pencil-square"></i> Επεξεργασία</a>
+</div>

@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -24,10 +25,12 @@ class Customer(TimeStampedModel):
     father_name = models.CharField('Πατρώνυμο', max_length=155, blank=True, null=True)
     tin_number = models.CharField('ΑΦΜ', max_length=9, blank=True, null=True, validators=[TIN_REGEX])
     phone_number = models.CharField('Τηεφωνο', max_length=10, blank=True, null=True, validators=[PHONE_REGEX])
+    summary = models.CharField('ΠΛηροφορίες', max_length=240, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Αγροτης'
         verbose_name_plural = 'Αγροτες'
+        unique_together = ['first_name', 'last_name', 'father_name']
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} του {self.father_name}'
@@ -42,7 +45,6 @@ class Note(TimeStampedModel):
     ('Έγγραφο', 'Έγγραφο'),
     ('Άλλο', 'Άλλο'),
 ]
-
     STATUS_CHOICES = [
     ('Ανοιχτό', 'Ανοιχτό'),
     ('Σε Εξέλιξη', 'Σε Εξέλιξη'),
@@ -58,6 +60,7 @@ class Note(TimeStampedModel):
     ('Ενημέρωση', 'Ενημέρωση'),
     ('Αποζημίωση', 'Αποζημίωση'),
 ]
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Χρήστης', null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='notes',
                                   verbose_name='Επαφή')
@@ -78,7 +81,9 @@ class Note(TimeStampedModel):
     def __str__(self):
         return f'{self.created.date()} - {self.customer}- {self.status}'
     
- 
+    def get_absolute_url(self):
+        return reverse('notes:note-update', kwargs={'pk': self.pk})
+    
     def save(self, *args, **kwargs):
         # Update `completed` based on status
         if self.status == 'Κλειστό':
