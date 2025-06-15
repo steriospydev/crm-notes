@@ -7,7 +7,7 @@
           <div class="card-body">
             <h5 class="card-title">Χρήστες
               <span class="badge rounded-pill bg-dark">
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated %}{{user_count}}
                 {% else %} 0 {% endif %}
               </span>
             </h5>
@@ -21,7 +21,7 @@
           <div class="card-body">
             <h5 class="card-title">Επαφές
               <span class="badge rounded-pill bg-dark">
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated %}{{ customer_count }}
                 {% else %} 0 {% endif %}
               </span>
             </h5>
@@ -35,7 +35,7 @@
           <div class="card-body text-center">
             <h5 class="card-title">Σημειώσεις
               <span class="badge rounded-pill bg-dark">
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated %} {{ note_count }}
                 {% else %} 0 {% endif %}
               </span>
             </h5>
