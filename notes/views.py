@@ -1,14 +1,28 @@
-from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
 
-from django.contrib import messages
 from .models import Note
 from .tools import NoteFormListView
-
-
 from .forms import CustomerForm
+
+
+@login_required
+def delete_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    # Ensure only the owner can delete
+    if note.user != request.user:
+        messages.error(request, "Δεν έχετε δικαίωμα να διαγράψετε αυτή τη σημείωση.")
+        return redirect('notes:index')
+
+    if request.method == 'POST':
+        note.delete()
+        messages.success(request, "Η σημείωση διαγράφηκε με επιτυχία.")
+        return redirect('notes:index')
+
+    messages.warning(request, "Η διαγραφή πρέπει να γίνει μέσω POST αιτήματος.")
+    return redirect('notes:index')
 
 @login_required
 def create_customer(request):
@@ -16,10 +30,10 @@ def create_customer(request):
         form = CustomerForm(request.POST)
         if form.is_valid():
             customer = form.save(commit=False)
-            customer.user = request.user  # assign user here
+            customer.user = request.user
             customer.save()
-            messages.success(request, 'Ο πελάτης δημιουργήθηκε με επιτυχία.')
-            return redirect('notes:index')  # your index view's URL name
+            messages.success(request, 'Η επαφή δημιουργήθηκε με επιτυχία.')
+            return redirect('notes:index')
         else:
             for error in form.non_field_errors():
                 messages.error(request, error)
@@ -28,12 +42,14 @@ def create_customer(request):
     else:
         return redirect('notes:index')
 
-
+   
 class NotesIndexView(NoteFormListView):
+    
     def get_queryset(self):
         method = self.request.GET.get('method')
         status = self.request.GET.get('status')
         search = self.request.GET.get('search')
+
         return Note.lookfors.filter_notes(method=method, status=status, search=search)
 
     def get_success_url(self):
@@ -50,18 +66,32 @@ class NotesIndexView(NoteFormListView):
 class NoteUpdateView(NoteFormListView):
     def dispatch(self, request, *args, **kwargs):
         self.note_instance = get_object_or_404(Note, pk=self.kwargs['pk'])
+        if self.note_instance.user != request.user:
+            messages.error(request, "Δεν έχετε άδεια να επεξεργαστείτε αυτή τη σημείωση.")
+            return redirect('notes:index')
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        # Filter notes by same customer
-        return Note.objects.filter(customer=self.note_instance.customer).order_by('-created')
+        method = self.request.GET.get('method')
+        status = self.request.GET.get('status')
+        search = self.request.GET.get('search')
+        return Note.lookfors.filter_notes(
+            method=method,
+            customer=self.note_instance.customer,
+            status=status,
+            search=search
+            ).order_by('-created')
+        
+        
 
     def get_success_url(self):
         return reverse_lazy('notes:note-update', kwargs={'pk': self.note_instance.pk})
 
     def post(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
+        
         form = self.get_form()
+    
         if form.is_valid():
             return self.form_valid(form)
         return self.form_invalid(form)

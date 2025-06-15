@@ -1,23 +1,13 @@
-import uuid
 from django.db import models
-from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from django.db.models import Q
+from config.misc import (TimeStampedModel, TIN_REGEX, PHONE_REGEX,
+                         STATUS_CHOICES, SUBJECT_CHOICES, COMMUNICATION_METHODS)
+
+
+from .manager import NoteManager
 
 User = get_user_model()
-
-class TimeStampedModel(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
-TIN_REGEX = RegexValidator(regex=r'^\d{9}$', message="Το ΑΦΜ πρέπει να έχει 9 ψηφία.")
-PHONE_REGEX = RegexValidator(regex=r'^\d{10}$', message="Το τηλέφωνο πρέπει να έχει 10 ψηφία.")
-
 
 class Customer(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Χρήστης', null=True, blank=True)
@@ -37,46 +27,7 @@ class Customer(TimeStampedModel):
         return f'{self.first_name} {self.last_name} του {self.father_name}'
 
 
-class NoteManager(models.Manager):
-    def filter_notes(self, method=None, status=None, search=None):
-        qs = self.get_queryset()
-        
-        if method:
-            qs = qs.filter(method=method)
-        if status:
-            qs = qs.filter(status=status)
-        if search:
-            qs = qs.filter(
-                Q(customer__first_name__icontains=search) |
-                Q(customer__last_name__icontains=search) |
-                Q(summary__icontains=search)
-            )
-        return qs
-
-class Note(TimeStampedModel):
-    COMMUNICATION_METHODS = [
-    ('Τηλέφωνο', 'Τηλέφωνο'),
-    ('Γραφείο', 'Γραφείο'),
-    ('Email', 'Email'),
-    ('Έγγραφο', 'Έγγραφο'),
-    ('Άλλο', 'Άλλο'),
-]
-    STATUS_CHOICES = [
-    ('Ανοιχτό', 'Ανοιχτό'),
-    ('Σε Εξέλιξη', 'Σε Εξέλιξη'),
-    ('Κλειστό', 'Κλειστό'),
-]
-    SUBJECT_CHOICES = [
-    ('Άλλο', 'Άλλο'),
-    ('Πληρωμή', 'Πληρωμή'),
-    ('Αρδευτική Ενημερότητα', 'Αρδευτική Ενημερότητα'),
-    ('Εύρεση Αγροτεμαχίου', 'Εύρεση Αγροτεμαχίου'),
-    ('Λογαριασμός', 'Λογαριασμός'),
-    ('Τιμολόγιο', 'Τιμολόγιο'),
-    ('Ενημέρωση', 'Ενημέρωση'),
-    ('Αποζημίωση', 'Αποζημίωση'),
-]
-    
+class Note(TimeStampedModel):       
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Χρήστης', null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='notes',
                                   verbose_name='Επαφή')
@@ -86,8 +37,9 @@ class Note(TimeStampedModel):
                                default='Άλλο')
     summary = models.TextField('Περιληψη', blank=True, null=True)
     status = models.CharField('Κατασταση', max_length=20, choices=STATUS_CHOICES,
-                               default='ΑΝΟΙΧΤΟ')
+                               default='Ανοιχτό')
     completed = models.BooleanField('ολοκληρωθηκε', default=False)
+    shortcode = models.CharField(max_length=10, unique=True, blank=True, null=True)
 
     objects = models.Manager() 
     lookfors = NoteManager()   
@@ -103,11 +55,29 @@ class Note(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('notes:note-update', kwargs={'pk': self.pk})
     
-    def save(self, *args, **kwargs):
-        # Update `completed` based on status
-        if self.status == 'Κλειστό':
-            self.completed = True
+    def has_completed(self):
+        if self.status != 'Κλειστό':
+            return False
+        return True
+    
+    def generate_shortcode(self):
+        last_note = Note.objects.order_by('-created').first()
+    
+        if last_note and last_note.shortcode and last_note.shortcode.startswith("E-"):
+            try:
+                last_number = int(last_note.shortcode.split("-")[1])
+            except (IndexError, ValueError):
+                last_number = 0
         else:
-            self.completed = False
+            last_number = 0
+
+        next_number = last_number + 1
+        return f"E-00{next_number}"
+
+    def save(self, *args, **kwargs):
+        self.completed = self.has_completed()
+        if not self.shortcode:
+            self.shortcode = self.generate_shortcode()
+
 
         super().save(*args, **kwargs)

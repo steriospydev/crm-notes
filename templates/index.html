@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load note_extras %}
 
 {% block title %} Ημερολόγιο Επικοινωνίας {% endblock %}
 
@@ -14,7 +15,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" id="customer-modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Δημιουργία Επαφής</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -27,7 +28,19 @@
     <!-- APP -->
     <div class="container my-4">
         <div class="row">
-            <h2 class="mb-4">Ημερολόγιο Επικοινωνίας</h2>
+            <div class="col-8">
+                <h2 class="mb-4">
+                {% if note_to_update %}/{{note_to_update.pk}}{% else %}Ημερολόγιο Επικοινωνίας {% endif %}
+                </h2>
+            </div>
+            <div class="col-4 text-end">
+                {% if note_to_update %}
+                <form method="post" class="mb-1" action="{% url 'notes:note-delete' note_to_update.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Διαγραφή</button>
+                </form>                        
+            {% endif %}
+            </div>            
         </div>
         {% if messages %}  
         <div class="messages">
@@ -47,93 +60,101 @@
 
         <!-- Δημιουργία Σημείωσης -->
         <div class="container shadow p-4 mb-5 bg-body  text-dark border rounded rounded-3 ">               
-            <form method="post" class="row g-3">
-                {% csrf_token %}
-                <div class="col-md-4">
-                    {{ form.subject.label_tag }}
-                    <span class="badge bg-primary mb-2">8</span>
-                    {{ form.subject }}
-                </div>
-                <div class="col-md-4">
-                    {{ form.method.label_tag }} 
-                    <span class="badge bg-primary mb-2">5</span>
-                    {{ form.method }}
-                </div>
-                <div class="col-4">
-                    {{ form.status.label_tag }}
-                    <span class="badge bg-primary mb-2">3</span>
-                    {{ form.status }}
+            <div class="row">
 
-                </div>
-                
-                <div class="col-md-6">
-                    {{ form.customer.label_tag }} 
-                    <button type="button" class="ms-3 btn btn-xs btn-outline-success"
-                            data-bs-toggle="modal" data-bs-target="#customerModal">
-                        Νεος 
-                    </button> {{ form.customer }}                
-                </div>
-                <div class="col-12">
-                    {{ form.summary.label_tag }} {{ form.summary }}
-                </div>
-                <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-lg {%if note_to_update %}btn-warning {% else %} btn-success{% endif %}">
-                        {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Σημείωσης
-                    </button>
-                    {% if note_to_update %}
-                        <a class="btn btn-lg btn-danger" href="">Διαγραφή Σημείωσης</a>
-                    {% endif %}
-                </div>
-            </form>
-        </div>
-    
-        <!-- Αναζήτηση Σημείωσης -->
-         <div class="container my-3">
-            <div class="row g-1 align-items-center justify-content-end">
-                <div class="col-12">
-                    <form method="get" class="row g-1 align-items-center justify-content-end">
-                    <div class="col-3 align-self-end">
-                        <select class="form-select" name="method" aria-label="Τρόπος Επικοινωνίας">
-                        <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
-                        <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
-                        <option value="Γραφείο" {% if request.GET.method == 'Γραφείο' %}selected{% endif %}>Γραφείο</option>
-                        <option value="Email" {% if request.GET.method == 'Email' %}selected{% endif %}>Email</option>
-                        <option value="Έγγραφο" {% if request.GET.method == 'Έγγραφο' %}selected{% endif %}>Έγγραφο</option>
-                        <option value="Άλλο" {% if request.GET.method == 'Άλλο' %}selected{% endif %}>Άλλο</option>
-                        </select>
-                    </div>
-                    <div class="col-3 align-self-end">
-                        <select class="form-select" name="status" aria-label="Κατάσταση">
-                        <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
-                        <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
-                        <option value="Σε Εξέλιξη" {% if request.GET.status == 'Σε Εξέλιξη' %}selected{% endif %}>Σε εξέλιξη</option>
-                        <option value="Κλειστό" {% if request.GET.status == 'Κλειστό' %}selected{% endif %}>Κλειστό</option>
-                        </select>
-                    </div>
-                    <div class="col-4 align-self-end">
-                        <input
-                        class="form-control"
-                        type="search"
-                        name="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                        value="{{ request.GET.search|default_if_none:'' }}"
-                        />
-                    </div>
-                    <div class="col-auto align-self-end">
-                        <button type="submit" class="btn btn-outline-dark">Φίλτρο</button>
-                    </div>
+                <div class="col-8">
+                    <form method="post" class="row g-3">
+                        {% csrf_token %}
+                        <div class="col-md-4">
+                           
+                            <span class="badge bg-primary mb-2"> {{ form.subject.label_tag }}</span>
+                            {{ form.subject }}
+                        </div>
+                        <div class="col-md-4">
+                            
+                            <span class="badge bg-primary mb-2">{{ form.method.label_tag }} </span>
+                            {{ form.method }}
+                        </div>
+                        <div class="col-4">
+                            <span class="badge bg-primary mb-2">{{ form.status.label_tag }}</span>
+                            {{ form.status }}
+
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <span class="badge bg-primary mb-2">{{ form.customer.label_tag }} </span>
+                            
+                            <button type="button" class="ms-3 btn btn-sm btn-link bg-gradient"
+                                    data-bs-toggle="modal" data-bs-target="#customerModal">
+                                Νέα Επαφή 
+                            </button> {{ form.customer }}                
+                        </div>
+                        <div class="col-12">
+                            {{ form.summary.label_tag }} {{ form.summary }}
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-sm btn-outline-success">
+                                <i class="bi bi-clipboard2-plus"></i>
+                                {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Σημείωσης
+                            </button>
+                        
+                        </div>
                     </form>
                 </div>
+                
+                <div class="col-4 bg-gradient rounded pt-5">
+                    <div class="col text-end">
+                         Αναζήτηση & Φίλτρα <i class="bi bi-search"></i></em></small>
+                    </div>
+                    <hr class="my-3 border border-dark opacity-50">
+                   
+                    <form method="get" class="row g-1 align-items-center justify-content-end">
+                        <div class="col-12 align-self-end">
+                            <select class="form-select" name="method" aria-label="Τρόπος Επικοινωνίας">
+                                <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
+                                <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
+                                <option value="Γραφείο" {% if request.GET.method == 'Γραφείο' %}selected{% endif %}>Γραφείο</option>
+                                <option value="Email" {% if request.GET.method == 'Email' %}selected{% endif %}>Email</option>
+                                <option value="Έγγραφο" {% if request.GET.method == 'Έγγραφο' %}selected{% endif %}>Έγγραφο</option>
+                                <option value="Άλλο" {% if request.GET.method == 'Άλλο' %}selected{% endif %}>Άλλο</option>
+                            </select>
+                        </div>
+                        <div class="col-12 align-self-end">
+                            <select class="form-select" name="status" aria-label="Κατάσταση">
+                                <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
+                                <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
+                                <option value="Σε Εξέλιξη" {% if request.GET.status == 'Σε Εξέλιξη' %}selected{% endif %}>Σε εξέλιξη</option>
+                                <option value="Κλειστό" {% if request.GET.status == 'Κλειστό' %}selected{% endif %}>Κλειστό</option>
+                            </select>
+                        </div>
+                        <div class="col-12 align-self-end">
+
+                            <input
+                            class="form-control"
+                            type="search"
+                            name="search"
+                            placeholder="Αναζητηση Επαφής"
+                            aria-label="Search"
+                            value="{{ request.GET.search|default_if_none:'' }}"
+                            />
+                        </div>
+                        <div class="col align-self-end text-center pt-3">
+                            <button type="submit" 
+                             class="btn btn-sm btn-primary">
+                             <i class="bi bi-filter"></i>Φιλτράρισμα</button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            
 
         </div>
 
         <!-- Λίστα Σημειώσεων -->
-        <div class="container bg-dark bg-gradient pb-4">
+        <div class="container  pb-4">
             <div class="row g-2">   
                 {% for note in notes %}
-                    <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="col-lg-6 col-md-12 col-sm-12 shadow shadow-lg">
                         <div class="card  mb-3 h-100 ">
                             <div class="card-body ">
                                 <div class="row pb-2">                    
@@ -141,8 +162,15 @@
                                         <h5 class="card-title">{{ note.customer }}</h5>
                                     </div>
                                     <div class="col-md-6 text-end ">
-                                        <a class="btn btn-warning bg-gradient rounded-3" href="{{ note.get_absolute_url }}">  
-                                            <i class="bi bi-pencil-square"></i> Επεξεργασία</a>
+                                        
+                                       {% if note.user == request.user %}
+                                        <a class="btn btn-sm btn-outline-primary bg-gradient rounded-3"
+                                        href="{{ note.get_absolute_url }}">
+                                        <i class="bi bi-pencil-square"></i> Επεξεργασία
+                                        </a>                    
+                                        {% endif %}
+                                        <em>{{ note.shortcode }}</em>
+                                        
                                     </div>
                                 </div>
                                 <h6 class="card-subtitle mb-2 text-muted">
@@ -160,7 +188,14 @@
                                     
                                 </h6>
                                 <p class="card-text p-3">
-                                    {{ note.summary|default:"<em>Χωρίς περίληψη</em>"|safe }}
+                                    <ol>
+                                        {% for sentence in note.summary|split_sentences %}
+                                            <li>{{ sentence }}.</li>
+                                        {% empty %}
+                                            <em>Χωρίς περίληψη</em>
+                                        {% endfor %}
+                                    </ol>                               
+                                    
                                 </p>
                             </div>
                         </div>

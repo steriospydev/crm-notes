@@ -1,9 +1,9 @@
 from django.views.generic import ListView
 from django.views.generic.edit import FormMixin
-from .models import Note
-from .forms import NoteForm, CustomerForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from .models import Note
+from .forms import NoteForm, CustomerForm
 
 class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
     model = Note
@@ -27,7 +27,6 @@ class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
 
     def form_valid(self, form):
         is_update = self.note_instance is not None and self.note_instance.pk is not None
-        
         note = form.save(commit=False)
         note.user = self.request.user
         note.save()

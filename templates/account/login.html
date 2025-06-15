@@ -3,40 +3,48 @@
 {% block title %} CRM | Log In {% endblock %}
 
 {% block content %}
-  
-          <div class="column is-6 is-offset-3">
-            <h1 class="title has-text-centered">
-              Log In
-            </h1>
-            <div class="box">
-              <form method="post" action="{% url 'login' %}" class="section is-warning">
-                {% csrf_token %}
+ <!-- Login Form -->
+  <div class="container my-5">    
+    <div class="row justify-content-center ">
+      <div class="col-lg-5 col-md-6 col-sm-6 my-3  ">
+        <div class="card shadow">
+          
+          <div class="card-title border-bottom">
+            <h3 class="p-3">CRM Portal – Σύνδεση Χρήστη</h3>
+          </div>
+          
+          <div class="card-body">
+            <form method="post" action="{% url 'login' %}" class="p-3">
+              {% csrf_token %}
                 {% for field in form %}
-                  <label class="label" for="{{ field.auto_id }}">{{ field.label }}</label>
-                  <p class="control has-icon has-icon-right">
+                  <div class="mb-5">
+                    
+                      <label class="form-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                    
+                    
+                    <p >
                     {{ field }}
-                  </p>
+                    </p>
+                  </div>
                   {% if form.errors %}
                     {% for error in field.errors %}
-                      <span class="icon is-small">
-                        <i class="fa fa-warning"></i>
-                      </span>
-                      <span class="help is-danger">{{ error|escape }}</span>
+                    {{ error|escape }}
                     {% endfor %}
                   {% endif %}
                 {% endfor %}
-
-                <p class="control p-2">
                   <input type="hidden" name="next" value="{{ next }}" />
-                  <input type="submit" value="Log In" class="button is-dark">
-                </p>
+                  <i class="btn btn-dark m-0 bi bi-door-open me-0"></i>
+                  <input type="submit" value="Είσοδος Χρήστη" class="btn ms-0  btn-primary">
+                  
+                </input>
               </form>
-            </div>
           </div>
+
+
         </div>
       </div>
     </div>
-
-
-
+  </div>
+  <!-- widgets -->
+  
 {% endblock %}

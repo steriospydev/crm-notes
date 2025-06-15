@@ -1,22 +1,27 @@
 ## FRONTEND
-1. Fix UI/UX login page
-2. Add create client form in modal(4B), (6B) DONE
-3. Add links to footer 
-4. Add svg to footer
+- Fix UI/UX login page
+
+- Add links to footer 
+- Add svg to footer
 ## BACKEND
-2. Add User Roles(ALL)
-3. Add NoteManager or Queryset (ALL) 
-4. Create ClientCreateForm (2F) Done
-5. remove "Ολοκληρωθηκε" from note.status(2F) DONE
-6. Make subject choice DONE
-9. IMPLEMENT: ALARM SYSTEM USER
-10. Customer List View
-11. FIlter data
-12. Search data
+- Add User Roles(ALL)
+- Make subject choice DONE
+- IMPLEMENT: ALARM SYSTEM USER
+- Allow user to connect notes
+- Add note identifier
+- Customer List View
+- 
+
+
+# COMPLETED
+- FIlter data DONE
+- Search data DONE 
+
+- Add NoteManager for filtering and search DONE
+- Create ClientCreateForm (2F) Done
+- remove "Ολοκληρωθηκε" from note.status(2F) DONE
+- Add create client form in modal(4B), (6B) DONE
 ## Dummy Data 
-1. subject = [ 
-    
-        ]
 
 
 

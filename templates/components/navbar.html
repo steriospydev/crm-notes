@@ -1,6 +1,14 @@
-<nav class="navbar navbar-expand-lg bg-secondary navbar-dark" data-bs-them="dark">
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient" 
+style="background-color:#423E37;" >
   <div class="container p-2">
-    <a class="navbar-brand" href="{% url 'notes:index' %}">TOEB - CRM</a>
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'notes:index' %}">
+      <img src="{% static 'images/logo.png' %}"
+       alt="" width="60" height="34"
+       class="d-inline-block align-text-top rounded me-2  rounded-circle">
+
+      {% if user.is_authenticated %}{{user.first_name}} {{ user.last_name}}{% else %}CRM{% endif %}
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -12,7 +20,7 @@
           href="{% url 'notes:index' %}">ΣΗΜΕΙΩΣΕΙΣ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">ΠΕΛΑΤΕΣ</a>
+          <a class="nav-link" href="#">ΕΠΑΦΕΣ</a>
         </li>        
         {% endif %}
       </ul>
@@ -20,10 +28,9 @@
      
           <form method="post" action="{% url 'logout' %}">
              {% csrf_token %}
-             <button type="submit" class="btn btn-danger">Αποσύνδεση</button>
+             <button type="submit" class="btn btn-danger">Αποσύνδεση, {{user.username}}</button>
           </form>
-        {% else %}
-            <a class="btn btn-success" href="{% url 'login' %}">Είσοδος</a>
+        
         {% endif %}
 
     </div>
