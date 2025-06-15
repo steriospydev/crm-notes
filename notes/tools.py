@@ -7,11 +7,11 @@ from django.contrib import messages
 
 class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
     model = Note
-    template_name = 'index.html'  # shared template
+    template_name = 'index.html' 
     context_object_name = 'notes'
     paginate_by = 6
     form_class = NoteForm
-    note_instance = None  # This will be set in child views if needed
+    note_instance = None  
 
     def get_form(self, form_class=None):
         if self.request.method == 'POST':
@@ -22,7 +22,7 @@ class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = self.get_form()
         context['note_to_update'] = self.note_instance
-        context['customer_form'] = CustomerForm()  # for the modal only
+        context['customer_form'] = CustomerForm() 
         return context
 
     def form_valid(self, form):

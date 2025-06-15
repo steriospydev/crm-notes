@@ -31,7 +31,10 @@ def create_customer(request):
 
 class NotesIndexView(NoteFormListView):
     def get_queryset(self):
-        return Note.objects.all().order_by('completed', '-created')
+        method = self.request.GET.get('method')
+        status = self.request.GET.get('status')
+        search = self.request.GET.get('search')
+        return Note.lookfors.filter_notes(method=method, status=status, search=search)
 
     def get_success_url(self):
         return reverse_lazy('notes:index')
@@ -63,41 +66,3 @@ class NoteUpdateView(NoteFormListView):
             return self.form_valid(form)
         return self.form_invalid(form)
     
-
-# I want to create the same page for Update view of a Note, the form will contain
-# the object's values to be updated while the List will contain all notes with the same customer value  e.g url /notes/1 
-# class NotesIndexView(LoginRequiredMixin, FormMixin, ListView):
-#     model = Note
-#     template_name = 'index.html'
-#     context_object_name = 'notes'
-#     paginate_by = 6
-#     form_class = NoteForm
-
-#     def get_success_url(self):
-#         return reverse_lazy('notes:index')
-
-#     def get_queryset(self):
-#         return Note.objects.all().order_by('completed', '-created')
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         if 'form' not in context:
-#             context['form'] = self.get_form()
-#         return context
-
-#     def post(self, request, *args, **kwargs):
-#         self.object_list = self.get_queryset()
-#         form = self.get_form()
-#         if form.is_valid():
-#             form.save()
-#             return self.form_valid(form)
-#         return self.form_invalid(form)
-
-#     def form_valid(self, form):
-#         note = form.save(commit=False)
-#         note.user = self.request.user
-#         note.save()
-#         return super().form_valid(form)
-
-#     def form_invalid(self, form):
-#         return self.render_to_response(self.get_context_data(form=form))

@@ -3,6 +3,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -36,6 +37,21 @@ class Customer(TimeStampedModel):
         return f'{self.first_name} {self.last_name} του {self.father_name}'
 
 
+class NoteManager(models.Manager):
+    def filter_notes(self, method=None, status=None, search=None):
+        qs = self.get_queryset()
+        
+        if method:
+            qs = qs.filter(method=method)
+        if status:
+            qs = qs.filter(status=status)
+        if search:
+            qs = qs.filter(
+                Q(customer__first_name__icontains=search) |
+                Q(customer__last_name__icontains=search) |
+                Q(summary__icontains=search)
+            )
+        return qs
 
 class Note(TimeStampedModel):
     COMMUNICATION_METHODS = [
@@ -72,6 +88,9 @@ class Note(TimeStampedModel):
     status = models.CharField('Κατασταση', max_length=20, choices=STATUS_CHOICES,
                                default='ΑΝΟΙΧΤΟ')
     completed = models.BooleanField('ολοκληρωθηκε', default=False)
+
+    objects = models.Manager() 
+    lookfors = NoteManager()   
 
     class Meta:
         verbose_name = 'Σημειωση'

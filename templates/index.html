@@ -34,20 +34,14 @@
             <div class="alert alert-success alert-dismissible fade show "
                 role="alert">
                 <ul>
-{% for message in messages %}
-                    <li class="{{ message.tags}}">
-                        
-                
+                    {% for message in messages %}
+                    <li class="{{ message.tags}}">                                       
                         {{ message }}
                     </li>
-
                     {% endfor %}
-                </ul>
-            
+                </ul>            
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            
-            
+                </div>         
         </div>
         {% endif %}
 
@@ -96,40 +90,43 @@
         <!-- Αναζήτηση Σημείωσης -->
          <div class="container my-3">
             <div class="row g-1 align-items-center justify-content-end">
-                <div class="col-6 align-self-end">
+                <div class="col-12">
                     <form method="get" class="row g-1 align-items-center justify-content-end">
-                        <div class="col-4 align-self-end">
-                            <select class="form-select" name="method" 
-                                    aria-label="Τρόπος Επικοινωνίας">
-                                <option value="" selected>Επικοινωνία</option>
-                                <option value="ΤΗΛΕΦΩΝΟ">Τηλέφωνο</option>
-                                <option value="ΑΥΤΟΠΡΟΣΩΠΑ">Αυτοπροσώπα</option>
-                                <option value="EMAIL">Email</option>
-                                <option value="ΕΓΓΡΑΦΟ">Έγγραφο</option>
-                                <option value="ΑΛΛΟ">Άλλο</option>
-                            </select>
-                        </div> 
-                        <div class="col-4 align-self-end">
-                            <select class="form-select" name="status" 
-                                    aria-label="Κατάσταση">
-                                <option value="" selected>Κατάσταση</option>
-                                <option value="ΑΝΟΙΧΤΟ">Ανοιχτό</option>
-                                <option value="ΣΕ_ΕΞΕΛΙΞΗ">Σε εξέλιξη</option>
-                                <option value="ΚΛΕΙΣΤΟ">Κλειστό</option>
-                            </select>
-                        </div>
-                        <div class="col-auto align-self-end">
-                            <button type="submit" class="btn btn-outline-dark">Φίλτρο</button>
-                        </div>
+                    <div class="col-3 align-self-end">
+                        <select class="form-select" name="method" aria-label="Τρόπος Επικοινωνίας">
+                        <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
+                        <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
+                        <option value="Γραφείο" {% if request.GET.method == 'Γραφείο' %}selected{% endif %}>Γραφείο</option>
+                        <option value="Email" {% if request.GET.method == 'Email' %}selected{% endif %}>Email</option>
+                        <option value="Έγγραφο" {% if request.GET.method == 'Έγγραφο' %}selected{% endif %}>Έγγραφο</option>
+                        <option value="Άλλο" {% if request.GET.method == 'Άλλο' %}selected{% endif %}>Άλλο</option>
+                        </select>
+                    </div>
+                    <div class="col-3 align-self-end">
+                        <select class="form-select" name="status" aria-label="Κατάσταση">
+                        <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
+                        <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
+                        <option value="Σε Εξέλιξη" {% if request.GET.status == 'Σε Εξέλιξη' %}selected{% endif %}>Σε εξέλιξη</option>
+                        <option value="Κλειστό" {% if request.GET.status == 'Κλειστό' %}selected{% endif %}>Κλειστό</option>
+                        </select>
+                    </div>
+                    <div class="col-4 align-self-end">
+                        <input
+                        class="form-control"
+                        type="search"
+                        name="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        value="{{ request.GET.search|default_if_none:'' }}"
+                        />
+                    </div>
+                    <div class="col-auto align-self-end">
+                        <button type="submit" class="btn btn-outline-dark">Φίλτρο</button>
+                    </div>
                     </form>
                 </div>
-                <div class="col-6 align-self-end">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button class="btn btn-outline-dark me-2" type="submit">Search</button>
-                    </form>
-                </div>            
-            </div>
+                </div>
+
         </div>
 
         <!-- Λίστα Σημειώσεων -->
