@@ -1,12 +1,12 @@
 from django import forms
-from .models import Note, Customer
+from .models import Note, Contact
 
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ['customer', 'method', 'subject', 'summary', 'status']
+        fields = ['contact', 'method', 'subject', 'summary', 'status']
         widgets = {
-            'customer': forms.Select(attrs={'class': 'form-select'}),
+            'contact': forms.Select(attrs={'class': 'form-select'}),
             'method': forms.Select(attrs={'class': 'form-select'}),
             'subject': forms.Select(attrs={'class': 'form-select'}),
             'summary': forms.Textarea(attrs={
@@ -21,13 +21,13 @@ class NoteForm(forms.ModelForm):
         user = kwargs.pop('user', None)  # Accept user in constructor
         super().__init__(*args, **kwargs)
         if user and user.is_authenticated:
-            self.fields['customer'].queryset = Customer.objects.owned_by(user)
+            self.fields['contact'].queryset = Contact.objects.owned_by(user)
         else:
-            self.fields['customer'].queryset = Customer.objects.none()
+            self.fields['contact'].queryset = Contact.objects.none()
 
-class CustomerForm(forms.ModelForm):
+class ContactForm(forms.ModelForm):
     class Meta:
-        model = Customer
+        model = Contact
         fields = [
             'first_name', 'last_name', 'father_name', 
             'phone_number', 'tin_number', 'summary'

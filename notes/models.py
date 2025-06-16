@@ -5,11 +5,11 @@ from config.misc import (TimeStampedModel, TIN_REGEX, PHONE_REGEX,
                          STATUS_CHOICES, SUBJECT_CHOICES, COMMUNICATION_METHODS)
 
 
-from .manager import NoteManager, CustomerManager
+from .manager import NoteManager, ContactManager
 
 User = get_user_model()
 
-class Customer(TimeStampedModel):
+class Contact(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                               verbose_name='Χρήστης', null=True, blank=True)
     first_name = models.CharField('Ονομα', max_length=155)
@@ -17,9 +17,9 @@ class Customer(TimeStampedModel):
     father_name = models.CharField('Πατρώνυμο', max_length=155, blank=True, null=True)
     tin_number = models.CharField('ΑΦΜ', max_length=9, blank=True, null=True, validators=[TIN_REGEX])
     phone_number = models.CharField('Τηεφωνο', max_length=10, blank=True, null=True, validators=[PHONE_REGEX])
-    summary = models.CharField('ΠΛηροφορίες', max_length=240, blank=True, null=True)
+    summary = models.CharField('Πληροφορίες', max_length=240, blank=True, null=True)
 
-    objects = CustomerManager()
+    objects = ContactManager()
     
     class Meta:
         verbose_name = 'Επαφή'
@@ -32,7 +32,7 @@ class Customer(TimeStampedModel):
 
 class Note(TimeStampedModel):       
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Χρήστης', null=True, blank=True)
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, related_name='notes',
+    contact = models.ForeignKey(Contact, on_delete=models.PROTECT, related_name='notes',
                                   verbose_name='Επαφή')
     method = models.CharField('Επικοινωνία', max_length=20,
                                choices=COMMUNICATION_METHODS, default='Γραφείο')
@@ -53,7 +53,7 @@ class Note(TimeStampedModel):
         ordering = ['-created']
 
     def __str__(self):
-        return f'{self.created.date()} - {self.customer}- {self.status}'
+        return f'{self.created.date()} - {self.contact}- {self.status}'
     
     def get_absolute_url(self):
         return reverse('notes:note-update', kwargs={'pk': self.pk})

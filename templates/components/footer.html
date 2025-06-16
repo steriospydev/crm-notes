@@ -2,49 +2,7 @@
   <div class="container text-dark">
     <div class="row">
 
-      <div class="col-md-3 mb-3">
-        <div class="card text-center">
-          <div class="card-body">
-            <h5 class="card-title">Χρήστες
-              <span class="badge rounded-pill bg-dark">
-                {% if user.is_authenticated %}{{user_count}}
-                {% else %} 0 {% endif %}
-              </span>
-            </h5>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 mb-3">
-        <div class="card text-center">
-          <div class="card-body">
-            <h5 class="card-title">Επαφές
-              <span class="badge rounded-pill bg-dark">
-                {% if user.is_authenticated %}{{ customer_count }}
-                {% else %} 0 {% endif %}
-              </span>
-            </h5>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 mb-3">
-        <div class="card" >
-          <div class="card-body text-center">
-            <h5 class="card-title">Σημειώσεις
-              <span class="badge rounded-pill bg-dark">
-                {% if user.is_authenticated %} {{ note_count }}
-                {% else %} 0 {% endif %}
-              </span>
-            </h5>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-3 mb-3">
+      <div class="col-md-12 mb-3 text-center">
         <h5>Follow Us</h5>
         <ul class="list-inline social-icons">
           <li class="list-inline-item"><a href="#" ><i class="bi bi-facebook"></i></a></li>
@@ -53,7 +11,7 @@
         </ul>
       </div>
     </div>
-    <hr class="mb-4">
+    <hr class="mb-6">
     <div class="row">
       <div class="col-md-12 text-center">
         <p>&copy; 2025 steriospydev. All rights reserved.</p>

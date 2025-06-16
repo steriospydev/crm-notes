@@ -1,12 +1,24 @@
 ## FRONTEND
-
+### Pages
+- User main dashboard.html (widgets and tables)
+- User main
 ## BACKEND
-- Add User Dashboard Pages
-- Add Customer views
-- Add User Roles(ALL) 
-- IMPLEMENT: ALARM SYSTEM USER
-- IMPLEMENT: Connect notes with each other
+- User Profile 
 
+- create 100 users x 100 contacts/user x 40 notes/per contact using Fake and commands/
+### Authentication
+
+### User
+- User Info
+- Preferences(subject)
+
+- Dashboard Pages
+
+### Note
+- make subject separate model Subject
+
+### Alarm
+- IMPLEMENT: ALARM SYSTEM USER
 
 # COMPLETED
 - Fix UI/UX login page DONE
@@ -16,7 +28,7 @@
 - Search data DONE 
 - Add note identifier DONE
 - Add NoteManager for filtering and search DONE
-- Create ClientCreateForm (2F) Done
+- Create ContactForm (2F) Done
 - remove "Ολοκληρωθηκε" from note.status(2F) DONE
 - Add create client form in modal(4B), (6B) DONE
 ## Dummy Data 

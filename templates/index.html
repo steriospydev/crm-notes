@@ -7,19 +7,19 @@
 
     <!-- Modal -->
     <div class="modal fade" 
-        id="customerModal" 
+        id="contactModal" 
         data-bs-backdrop="static" 
         data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
         >
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="customer-modal-content">
+            <div class="modal-content" id="contact-modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Δημιουργία Επαφής</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                        {% include 'components/customer_form.html' with form=customer_form %}
+                        {% include 'components/contact_form.html' with form=contact_form %}
                 </div>               
             </div>
         </div>
@@ -84,12 +84,12 @@
                         </div>
                         
                         <div class="col-md-6">
-                            <span class="badge bg-primary mb-2">{{ form.customer.label_tag }} </span>
+                            <span class="badge bg-primary mb-2">{{ form.contact.label_tag }} </span>
                             
                             <button type="button" class="ms-3 btn btn-sm btn-link bg-gradient"
-                                    data-bs-toggle="modal" data-bs-target="#customerModal">
+                                    data-bs-toggle="modal" data-bs-target="#contactModal">
                                 Νέα Επαφή 
-                            </button> {{ form.customer }}                
+                            </button> {{ form.contact }}                
                         </div>
                         <div class="col-12">
                             {{ form.summary.label_tag }} {{ form.summary }}
@@ -161,7 +161,7 @@
                             <div class="card-body ">
                                 <div class="row pb-2">                    
                                     <div class="col-md-6">
-                                        <h5 class="card-title">{{ note.customer }}</h5>
+                                        <h5 class="card-title">{{ note.contact }}</h5>
                                     </div>
                                     <div class="col-md-6 text-end ">
                                         

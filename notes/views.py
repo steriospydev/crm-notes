@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect
 
 from .models import Note
 from .tools import NoteFormListView
-from .forms import CustomerForm
+from .forms import ContactForm
 
 
 @login_required
@@ -25,13 +25,13 @@ def delete_note(request, pk):
     return redirect('notes:index')
 
 @login_required
-def create_customer(request):
+def create_contact(request):
     if request.method == 'POST':
-        form = CustomerForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
-            customer = form.save(commit=False)
-            customer.user = request.user
-            customer.save()
+            contact = form.save(commit=False)
+            contact.user = request.user
+            contact.save()
             messages.success(request, 'Η επαφή δημιουργήθηκε με επιτυχία.')
             return redirect('notes:index')
         else:
@@ -52,7 +52,9 @@ class NotesIndexView(NoteFormListView):
         user = self.request.user
 
         return Note.lookfors.filter_notes(
-            user=user, method=method, status=status, search=search)
+            user=user, method=method, status=status, search=search
+            ).select_related('contact', 'user')
+
 
     def get_success_url(self):
         return reverse_lazy('notes:index')
@@ -67,10 +69,15 @@ class NotesIndexView(NoteFormListView):
 
 class NoteUpdateView(NoteFormListView):
     def dispatch(self, request, *args, **kwargs):
-        self.note_instance = get_object_or_404(Note, pk=self.kwargs['pk'])
+        # self.note_instance = get_object_or_404(Note, pk=self.kwargs['pk'])
+        self.note_instance = get_object_or_404(Note.objects.select_related('contact', 'user'),
+                                                pk=self.kwargs['pk'])
         if self.note_instance.user != request.user:
             messages.error(request, "Δεν έχετε άδεια να επεξεργαστείτε αυτή τη σημείωση.")
             return redirect('notes:index')
+        
+        
+        
         return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -80,10 +87,10 @@ class NoteUpdateView(NoteFormListView):
         return Note.lookfors.filter_notes(
             user=self.request.user,
             method=method,
-            customer=self.note_instance.customer,
+            contact=self.note_instance.contact,
             status=status,
             search=search
-            ).order_by('-created')
+            ).select_related('contact', 'user').order_by('-created')
         
         
 

@@ -3,7 +3,7 @@ from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .models import Note
-from .forms import NoteForm, CustomerForm
+from .forms import NoteForm, ContactForm
 
 class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
     model = Note
@@ -22,7 +22,7 @@ class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = self.get_form()
         context['note_to_update'] = self.note_instance
-        context['customer_form'] = CustomerForm() 
+        context['contact_form'] = ContactForm() 
         return context
 
     def form_valid(self, form):
@@ -33,7 +33,7 @@ class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
 
         if is_update:
             messages.success(self.request, 
-                             f'Η σημείωση του {note.customer } ενημερώθηκε με επιτυχία.')
+                             f'Η σημείωση του {note.contact } ενημερώθηκε με επιτυχία.')
         else:
             messages.success(self.request, 'Η σημείωση δημιουργήθηκε με επιτυχία.')
 
