@@ -15,8 +15,8 @@ class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
 
     def get_form(self, form_class=None):
         if self.request.method == 'POST':
-            return self.form_class(self.request.POST, instance=self.note_instance)
-        return self.form_class(instance=self.note_instance)
+            return self.form_class(self.request.POST, instance=self.note_instance,  user=self.request.user)
+        return self.form_class(instance=self.note_instance, user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

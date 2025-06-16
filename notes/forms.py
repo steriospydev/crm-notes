@@ -17,6 +17,14 @@ class NoteForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-select'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Accept user in constructor
+        super().__init__(*args, **kwargs)
+        if user and user.is_authenticated:
+            self.fields['customer'].queryset = Customer.objects.owned_by(user)
+        else:
+            self.fields['customer'].queryset = Customer.objects.none()
+
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
@@ -32,3 +40,11 @@ class CustomerForm(forms.ModelForm):
             'tin_number': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'ΑΦΜ'}),
             'summary': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Περιγραφή'}),
         }
+
+    def save(self, commit=True, user=None):
+        instance = super().save(commit=False)
+        if user:
+            instance.user = user
+        if commit:
+            instance.save()
+        return instance

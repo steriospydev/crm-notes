@@ -49,8 +49,10 @@ class NotesIndexView(NoteFormListView):
         method = self.request.GET.get('method')
         status = self.request.GET.get('status')
         search = self.request.GET.get('search')
+        user = self.request.user
 
-        return Note.lookfors.filter_notes(method=method, status=status, search=search)
+        return Note.lookfors.filter_notes(
+            user=user, method=method, status=status, search=search)
 
     def get_success_url(self):
         return reverse_lazy('notes:index')
@@ -76,6 +78,7 @@ class NoteUpdateView(NoteFormListView):
         status = self.request.GET.get('status')
         search = self.request.GET.get('search')
         return Note.lookfors.filter_notes(
+            user=self.request.user,
             method=method,
             customer=self.note_instance.customer,
             status=status,

@@ -5,12 +5,13 @@ from config.misc import (TimeStampedModel, TIN_REGEX, PHONE_REGEX,
                          STATUS_CHOICES, SUBJECT_CHOICES, COMMUNICATION_METHODS)
 
 
-from .manager import NoteManager
+from .manager import NoteManager, CustomerManager
 
 User = get_user_model()
 
 class Customer(TimeStampedModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Χρήστης', null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                              verbose_name='Χρήστης', null=True, blank=True)
     first_name = models.CharField('Ονομα', max_length=155)
     last_name = models.CharField('Επίθετο', max_length=155)
     father_name = models.CharField('Πατρώνυμο', max_length=155, blank=True, null=True)
@@ -18,10 +19,12 @@ class Customer(TimeStampedModel):
     phone_number = models.CharField('Τηεφωνο', max_length=10, blank=True, null=True, validators=[PHONE_REGEX])
     summary = models.CharField('ΠΛηροφορίες', max_length=240, blank=True, null=True)
 
+    objects = CustomerManager()
+    
     class Meta:
-        verbose_name = 'Αγροτης'
-        verbose_name_plural = 'Αγροτες'
-        unique_together = ['first_name', 'last_name', 'father_name']
+        verbose_name = 'Επαφή'
+        verbose_name_plural = 'Επαφές'
+        unique_together = ['first_name', 'last_name', 'father_name', 'user']
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} του {self.father_name}'
