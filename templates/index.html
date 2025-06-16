@@ -27,6 +27,7 @@
     <!-- End Modal -->
     <!-- APP -->
     <div class="container my-4">
+        <!-- Page Header -->
         <div class="row">
             <div class="col-8">
                 <h2 class="mb-4">
@@ -42,20 +43,21 @@
             {% endif %}
             </div>            
         </div>
+        <!-- Messages -->
         {% if messages %}  
-        <div class="messages">
-            <div class="alert alert-success alert-dismissible fade show "
-                role="alert">
-                <ul>
-                    {% for message in messages %}
-                    <li class="{{ message.tags}}">                                       
-                        {{ message }}
-                    </li>
-                    {% endfor %}
-                </ul>            
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="messages">
+                <div class="alert alert-success alert-dismissible fade show "
+                    role="alert">
+                    <ul>
+                        {% for message in messages %}
+                        <li class="{{ message.tags}}">                                       
+                            {{ message }}
+                        </li>
+                        {% endfor %}
+                    </ul>            
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>         
-        </div>
+            </div>
         {% endif %}
 
         <!-- Δημιουργία Σημείωσης -->
@@ -231,5 +233,4 @@
             </nav>
         {% endif %}
     </div>
-
 {% endblock %}
