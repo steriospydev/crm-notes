@@ -32,7 +32,10 @@ class Note(TimeStampedModel):
         verbose_name = 'Σημειωση'
         verbose_name_plural = 'Σημειωσεις'
         ordering = ['-created']
-
+        indexes = [
+            models.Index(fields=['user']),
+            models.Index(fields=['contact']),]
+        
     def __str__(self):
         return f'{self.created.date()} - {self.contact}- {self.status}'
     

@@ -16,9 +16,9 @@ class NotesIndexView(NoteFormListView):
         search = self.request.GET.get('search')
         user = self.request.user
 
-        return Note.lookfors.filter_notes(
+        return Note.lookfors.select_related('contact', 'user').filter_notes(
             user=user, method=method, status=status, search=search
-            ).select_related('contact', 'user')
+            )
 
 
     def get_success_url(self):
