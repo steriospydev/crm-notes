@@ -1,9 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from config.misc import (TimeStampedModel, TIN_REGEX, PHONE_REGEX,
+from config.misc import (TimeStampedModel, TIN_REGEX, PHONE_REGEX, EMAIL_REGEX,
                          STATUS_CHOICES, SUBJECT_CHOICES, COMMUNICATION_METHODS)
-
 
 from .manager import NoteManager, ContactManager
 
@@ -14,21 +13,27 @@ class Contact(TimeStampedModel):
                               verbose_name='Χρήστης', null=True, blank=True)
     first_name = models.CharField('Ονομα', max_length=155)
     last_name = models.CharField('Επίθετο', max_length=155)
-    father_name = models.CharField('Πατρώνυμο', max_length=155, blank=True, null=True)
-    tin_number = models.CharField('ΑΦΜ', max_length=9, blank=True, null=True, validators=[TIN_REGEX])
+    company = models.CharField('Οντότητα', max_length=155, blank=True, null=True)
+    email = models.CharField('Email',
+                             max_length=200,
+                             blank=True,null=True,
+                             validators=[EMAIL_REGEX])
+    tin_number = models.CharField('ΑΦΜ', max_length=9, blank=True, null=True, 
+                                  validators=[TIN_REGEX], unique=True)
     phone_number = models.CharField('Τηεφωνο', max_length=10, blank=True, null=True, validators=[PHONE_REGEX])
-    summary = models.CharField('Πληροφορίες', max_length=240, blank=True, null=True)
+    summary = models.TextField('Πληροφορίες', blank=True, null=True)
 
     objects = ContactManager()
     
     class Meta:
         verbose_name = 'Επαφή'
         verbose_name_plural = 'Επαφές'
-        unique_together = ['first_name', 'last_name', 'father_name', 'user']
+        unique_together = ['first_name', 'last_name', 'company', 'user']
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} του {self.father_name}'
-
+        fullname = f'{self.first_name} {self.last_name}'
+        display = f'{fullname} - {self.company}' if self.company else fullname
+        return display
 
 class Note(TimeStampedModel):       
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Χρήστης', null=True, blank=True)

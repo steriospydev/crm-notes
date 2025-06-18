@@ -1,31 +1,50 @@
-<form method="post" action="{% url 'notes:contact-create' %}">
-    {% csrf_token %}
-      <div class="container">
-        
-        <div class="row g-2">
-            <div class="d-grid">
-                {{ form.first_name }}
+<div class="modal fade" 
+        id="contactModal" 
+        data-bs-backdrop="static" 
+        data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
+        >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="contact-modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Δημιουργία Επαφής</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="d-grid">
-                {{ form.last_name }}
-            </div>
-            <div class="d-grid">
-                {{ form.father_name }}
-            </div>
-            <div class="d-grid">
-                {{ form.phone_number }}
-            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'notes:contact-create' %}">
+                    {% csrf_token %}
+                    <div class="container">
+                        
+                        <div class="row g-2">
+                            <div class="d-grid">
+                                {{ form.first_name }}
+                            </div>
+                            <div class="d-grid">
+                                {{ form.last_name }}
+                            </div>
+                            <div class="d-grid">
+                                {{ form.company }}
+                            </div>
+                            <div class="d-grid">
+                                {{ form.phone_number }}
+                            </div>
+                            <div class="d-grid">
+                                {{ form.email }}
+                            </div>
+                            <div class="d-grid">
+                                {{ form.tin_number }}
+                            </div>
 
-            <div class="d-grid">
-                {{ form.tin_number }}
-            </div>
-
-            <div class="d-grid">
-                {{ form.summary }}
-            </div>
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Αποθήκευση</button>
-            </div>
+                            <div class="d-grid">
+                                {{ form.summary }}
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Αποθήκευση</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>               
         </div>
-      </div>
-</form>
+    </div>
+</div>

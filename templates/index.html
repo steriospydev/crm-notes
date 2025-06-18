@@ -4,212 +4,18 @@
 {% block title %} Ημερολόγιο Επικοινωνίας {% endblock %}
 
 {% block content %}
-
-    <!-- Modal -->
-    <div class="modal fade" 
-        id="contactModal" 
-        data-bs-backdrop="static" 
-        data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
-        >
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" id="contact-modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Δημιουργία Επαφής</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                        {% include 'components/contact_form.html' with form=contact_form %}
-                </div>               
-            </div>
-        </div>
-    </div>
-    <!-- End Modal -->
     <!-- APP -->
     <div class="container my-4">
-        <!-- Page Header -->
-        <div class="row">
-            <div class="col-8">
-                <h2 class="mb-4">
-                {% if note_to_update %}/{{note_to_update.pk}}{% else %}Ημερολόγιο Επικοινωνίας {% endif %}
-                </h2>
-            </div>
-            <div class="col-4 text-end">
-                {% if note_to_update %}
-                <form method="post" class="mb-1" action="{% url 'notes:note-delete' note_to_update.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm">Διαγραφή</button>
-                </form>                        
-            {% endif %}
-            </div>            
-        </div>
-        <!-- Messages -->
-        {% if messages %}  
-            <div class="messages">
-                <div class="alert alert-success alert-dismissible fade show "
-                    role="alert">
-                    <ul>
-                        {% for message in messages %}
-                        <li class="{{ message.tags}}">                                       
-                            {{ message }}
-                        </li>
-                        {% endfor %}
-                    </ul>            
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>         
-            </div>
-        {% endif %}
+        <!-- Page Header --> {% include 'notes/header.html' with note_to_update=note_to_update %}
+        <!-- Modal --> {% include 'components/contact_form.html' with form=contact_form %}
+        <!-- Messages --> {% include 'components/messages.html' with messages=messages %}
 
-        <!-- Δημιουργία Σημείωσης -->
-        <div class="container shadow p-4 mb-5 bg-body  text-dark border rounded rounded-3 ">               
-            <div class="row">
+        <!-- Δημιουργία Σημείωσης --> {% include 'notes/create.html' with form=form %}
 
-                <div class="col-8">
-                    <form method="post" class="row g-3">
-                        {% csrf_token %}
-                        <div class="col-md-4">
-                           
-                            <span class="badge bg-primary mb-2"> {{ form.subject.label_tag }}</span>
-                            {{ form.subject }}
-                        </div>
-                        <div class="col-md-4">
-                            
-                            <span class="badge bg-primary mb-2">{{ form.method.label_tag }} </span>
-                            {{ form.method }}
-                        </div>
-                        <div class="col-4">
-                            <span class="badge bg-primary mb-2">{{ form.status.label_tag }}</span>
-                            {{ form.status }}
+        <!-- Λίστα Σημειώσεων --> {% include 'notes/list.html' with notes=notes %}
 
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <span class="badge bg-primary mb-2">{{ form.contact.label_tag }} </span>
-                            
-                            <button type="button" class="ms-3 btn btn-sm btn-link bg-gradient"
-                                    data-bs-toggle="modal" data-bs-target="#contactModal">
-                                Νέα Επαφή 
-                            </button> {{ form.contact }}                
-                        </div>
-                        <div class="col-12">
-                            {{ form.summary.label_tag }} {{ form.summary }}
-                        </div>
-                        <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-sm btn-outline-success">
-                                <i class="bi bi-clipboard2-plus"></i>
-                                {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Σημείωσης
-                            </button>
-                        
-                        </div>
-                    </form>
-                </div>
-                
-                <div class="col-4 bg-gradient rounded pt-5">
-                    <div class="col text-end">
-                         Αναζήτηση & Φίλτρα <i class="bi bi-search"></i></em></small>
-                    </div>
-                    <hr class="my-3 border border-dark opacity-50">
-                   
-                    <form method="get" class="row g-1 align-items-center justify-content-end">
-                        <div class="col-12 align-self-end">
-                            <select class="form-select" name="method" aria-label="Τρόπος Επικοινωνίας">
-                                <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
-                                <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
-                                <option value="Γραφείο" {% if request.GET.method == 'Γραφείο' %}selected{% endif %}>Γραφείο</option>
-                                <option value="Email" {% if request.GET.method == 'Email' %}selected{% endif %}>Email</option>
-                                <option value="Έγγραφο" {% if request.GET.method == 'Έγγραφο' %}selected{% endif %}>Έγγραφο</option>
-                                <option value="Άλλο" {% if request.GET.method == 'Άλλο' %}selected{% endif %}>Άλλο</option>
-                            </select>
-                        </div>
-                        <div class="col-12 align-self-end">
-                            <select class="form-select" name="status" aria-label="Κατάσταση">
-                                <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
-                                <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
-                                <option value="Σε Εξέλιξη" {% if request.GET.status == 'Σε Εξέλιξη' %}selected{% endif %}>Σε εξέλιξη</option>
-                                <option value="Κλειστό" {% if request.GET.status == 'Κλειστό' %}selected{% endif %}>Κλειστό</option>
-                            </select>
-                        </div>
-                        <div class="col-12 align-self-end">
-
-                            <input
-                            class="form-control"
-                            type="search"
-                            name="search"
-                            placeholder="Αναζητηση Επαφής"
-                            aria-label="Search"
-                            value="{{ request.GET.search|default_if_none:'' }}"
-                            />
-                        </div>
-                        <div class="col align-self-end text-center pt-3">
-                            <button type="submit" 
-                             class="btn btn-sm btn-primary">
-                             <i class="bi bi-filter"></i>Φιλτράρισμα</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-
-        </div>
-
-        <!-- Λίστα Σημειώσεων -->
-        <div class="container  pb-4">
-            <div class="row g-2">   
-                {% for note in notes %}
-                    <div class="col-lg-6 col-md-12 col-sm-12 shadow shadow-lg">
-                        <div class="card  mb-3 h-100 ">
-                            <div class="card-body ">
-                                <div class="row pb-2">                    
-                                    <div class="col-md-6">
-                                        <h5 class="card-title">{{ note.contact }}</h5>
-                                    </div>
-                                    <div class="col-md-6 text-end ">
-                                        
-                                       {% if note.user == request.user %}
-                                        <a class="btn btn-sm btn-outline-primary bg-gradient rounded-3"
-                                        href="{{ note.get_absolute_url }}">
-                                        <i class="bi bi-pencil-square"></i> Επεξεργασία
-                                        </a>                    
-                                        {% endif %}
-                                        <em>{{ note.shortcode }}</em>
-                                        
-                                    </div>
-                                </div>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    {{ note.user.first_name }} - {{ note.created|date:"d/m/Y H:i" }}   
-                                    <span class="badge bg-primary bg-gradient p-2">{{ note.subject }}</span>
-                                    <span class="badge bg-dark bg-gradient p-2">{{ note.method }}</span>
-                                    <span class="badge bg-gradient p-2 
-                                                {% if note.status == 'Ανοιχτό' %}bg-success
-                                                {% elif note.status == 'Κλειστό' %}bg-secondary
-                                                {% elif note.status == 'Σε Εξέλιξη' %}bg-warning text-dark
-                                                {% else %}bg-danger
-                                                {% endif %}">
-                                        {{ note.status }}
-                                    </span>
-                                    
-                                </h6>
-                                <p class="card-text p-3">
-                                    <ol>
-                                        {% for sentence in note.summary|split_sentences %}
-                                            <li>{{ sentence }}.</li>
-                                        {% empty %}
-                                            <em>Χωρίς περίληψη</em>
-                                        {% endfor %}
-                                    </ol>                               
-                                    
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <div class="alert alert-info">Δεν υπάρχουν σημειώσεις.</div>
-                {% endfor %}  
-            </div>
-        </div>
-    
-        <!-- Πλοήγηση Σελίδων -->
-        {% if is_paginated %}
+        <!-- Πλοήγηση Σελίδων --> 
+         {% if is_paginated %}
             <nav>
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
@@ -232,5 +38,6 @@
                 </ul>
             </nav>
         {% endif %}
+     
     </div>
 {% endblock %}

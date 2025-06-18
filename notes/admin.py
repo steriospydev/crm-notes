@@ -3,7 +3,7 @@ from .models import Contact, Note
 
 @admin.register(Contact)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'father_name', 'tin_number', 'phone_number', 'id']
+    list_display = ['first_name', 'last_name', 'company', 'tin_number', 'phone_number', 'id']
 
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):

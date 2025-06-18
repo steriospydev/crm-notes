@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-8">
+        {% if note_to_update %}                  
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">
+                        {{ note_to_update.contact}}</a></li>
+                    <li class="breadcrumb-item">
+                        {{ note_to_update.created }}</li>
+
+                    <li class="breadcrumb-item" aria-current="page">
+                        {{ note_to_update.shortcode }}</li>
+                </ol>
+            </nav>                
+        {% endif %}            
+    </div>
+    <div class="col-4 text-end">
+        {% if note_to_update %}
+        <form method="post" class="mb-1" action="{% url 'notes:note-delete' note_to_update.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">Διαγραφή</button>
+        </form>                        
+    {% endif %}
+    </div>            
+</div>

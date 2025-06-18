@@ -3,3 +3,5 @@ venv/
 db.sqlite3
 mogrations
 __pycache__
+send/
+send.*

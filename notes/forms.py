@@ -29,16 +29,19 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = [
-            'first_name', 'last_name', 'father_name', 
+            'first_name', 'last_name', 'company', 'email',
             'phone_number', 'tin_number', 'summary'
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Όνομα'}),
             'last_name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Επίθετο'}),
-            'father_name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Πατρώνυμο'}),
+            'company': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Εταιρία'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Τηλέφωνο'}),
+            'email': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Email'}),
             'tin_number': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'ΑΦΜ'}),
-            'summary': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Περιγραφή'}),
+            'summary': forms.Textarea(attrs={'class': 'form-input', 
+                                             'rows': 3,
+                                             'placeholder': 'Περιγραφή'}),
         }
 
     def save(self, commit=True, user=None):
