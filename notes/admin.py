@@ -1,9 +1,5 @@
 from django.contrib import admin
-from .models import Contact, Note
-
-@admin.register(Contact)
-class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'company', 'tin_number', 'phone_number', 'id']
+from .models import Note
 
 @admin.register(Note)
 class NoteAdmin(admin.ModelAdmin):

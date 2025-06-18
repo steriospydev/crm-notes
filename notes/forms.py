@@ -1,5 +1,8 @@
 from django import forms
-from .models import Note, Contact
+
+from contact.models import Contact
+
+from .models import Note
 
 class NoteForm(forms.ModelForm):
     class Meta:
@@ -24,30 +27,3 @@ class NoteForm(forms.ModelForm):
             self.fields['contact'].queryset = Contact.objects.owned_by(user)
         else:
             self.fields['contact'].queryset = Contact.objects.none()
-
-class ContactForm(forms.ModelForm):
-    class Meta:
-        model = Contact
-        fields = [
-            'first_name', 'last_name', 'company', 'email',
-            'phone_number', 'tin_number', 'summary'
-        ]
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Όνομα'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Επίθετο'}),
-            'company': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Εταιρία'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Τηλέφωνο'}),
-            'email': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Email'}),
-            'tin_number': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'ΑΦΜ'}),
-            'summary': forms.Textarea(attrs={'class': 'form-input', 
-                                             'rows': 3,
-                                             'placeholder': 'Περιγραφή'}),
-        }
-
-    def save(self, commit=True, user=None):
-        instance = super().save(commit=False)
-        if user:
-            instance.user = user
-        if commit:
-            instance.save()
-        return instance

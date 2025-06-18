@@ -1,4 +1,7 @@
+
+navbar 
 ## FRONTEND
+
 ### Pages
 - User main dashboard.html (widgets and tables)
 - User main

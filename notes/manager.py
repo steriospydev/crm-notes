@@ -1,23 +1,5 @@
-from django.db import models
 from django.db.models import Q
-from django.core.exceptions import PermissionDenied
-
-
-class UserOwnedQuerySet(models.QuerySet):
-    def owned_by(self, user):
-        if not user or not user.is_authenticated:
-            raise PermissionDenied("A valid user is required to access these objects.")
-        return self.filter(user=user)
-
-class UserOwnedManager(models.Manager):
-    def get_queryset(self):
-        return self.queryset_class(self.model, using=self._db)
-
-    def owned_by(self, user):
-        return self.get_queryset().owned_by(user)
-    
-class ContactQuerySet(UserOwnedQuerySet):
-    pass
+from tools.manager import UserOwnedManager, UserOwnedQuerySet
 
 
 class NoteQuerySet(UserOwnedQuerySet):
@@ -42,9 +24,6 @@ class NoteQuerySet(UserOwnedQuerySet):
             )
         return qs
     
-    
-class ContactManager(UserOwnedManager):
-    queryset_class = ContactQuerySet
 
 class NoteManager(UserOwnedManager):
     queryset_class = NoteQuerySet

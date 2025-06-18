@@ -3,44 +3,9 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 
+from tools.views import NoteFormListView
+
 from .models import Note
-from .tools import NoteFormListView
-from .forms import ContactForm
-
-
-@login_required
-def delete_note(request, pk):
-    note = get_object_or_404(Note, pk=pk)
-    # Ensure only the owner can delete
-    if note.user != request.user:
-        messages.error(request, "Δεν έχετε δικαίωμα να διαγράψετε αυτή τη σημείωση.")
-        return redirect('notes:index')
-
-    if request.method == 'POST':
-        note.delete()
-        messages.success(request, "Η σημείωση διαγράφηκε με επιτυχία.")
-        return redirect('notes:index')
-
-    messages.warning(request, "Η διαγραφή πρέπει να γίνει μέσω POST αιτήματος.")
-    return redirect('notes:index')
-
-@login_required
-def create_contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            contact = form.save(commit=False)
-            contact.user = request.user
-            contact.save()
-            messages.success(request, 'Η επαφή δημιουργήθηκε με επιτυχία.')
-            return redirect('notes:index')
-        else:
-            for error in form.non_field_errors():
-                messages.error(request, error)
-
-            return redirect('notes:index')
-    else:
-        return redirect('notes:index')
 
    
 class NotesIndexView(NoteFormListView):
@@ -106,3 +71,21 @@ class NoteUpdateView(NoteFormListView):
             return self.form_valid(form)
         return self.form_invalid(form)
     
+
+
+@login_required
+def delete_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    # Ensure only the owner can delete
+    if note.user != request.user:
+        messages.error(request, "Δεν έχετε δικαίωμα να διαγράψετε αυτή τη σημείωση.")
+        return redirect('notes:index')
+
+    if request.method == 'POST':
+        note.delete()
+        messages.success(request, "Η σημείωση διαγράφηκε με επιτυχία.")
+        return redirect('notes:index')
+
+    messages.warning(request, "Η διαγραφή πρέπει να γίνει μέσω POST αιτήματος.")
+    return redirect('notes:index')
+

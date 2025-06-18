@@ -1,19 +1,25 @@
-{% load static %}
 {% load note_extras %}
+{% load status_state %}
 
-<div class="container  pb-4">
-    <div class="row g-2  shadow-sm p-1 mb-5 bg-body rounded">   
+<div class="container  pb-4 ">
+    <div class="row g-2  shadow-sm p-1 mb-5 rounded"
+    style="background-color: {{theme.bg_form}};">   
+        
+
         {% for note in notes %}
-            <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-12 col-sm-12 ">
                 <div class="card  mb-3 h-100 ">
-                    <div class="card-body">
-                        <div class="row pb-2">                    
-                            <div class="col-md-6">
-                                <h5 class="card-title">{{ note.contact }}</h5>
+                    <div class="card-body rounded rounded-3"
+                    style="background-color: {{ theme.bg_note }};color: {{ theme.text_note }};"
+                    >
+                        <div class="row p-2">                    
+                            <div class="col-md-8">
+                                <h5 class="card-title"
+                                style="color: {{ theme.text_note}};">{{ note.contact }}</h5>
                             </div>
-                            <div class="col-md-6 text-end ">
+                            <div class="col-md-4 text-end ">
                                 {% if note.user == request.user %}
-                                    <a class="btn btn-sm btn-outline-primary bg-gradient rounded-3"
+                                    <a class="btn btn-sm btn-primary bg-gradient rounded-3"
                                         href="{{ note.get_absolute_url }}">
                                         <i class="bi bi-pencil-square"></i>
                                          <em>{{ note.shortcode }}</em>
@@ -21,29 +27,25 @@
                                 {% endif %}                              
                             </div>
                         </div>
-                        <h6 class="card-subtitle mb-2 text-muted">
+                        <h6 class="card-subtitle mb-2 text-dark">
                             {{ note.user.first_name }} - {{ note.created|date:"d/m/Y H:i" }}   
-                            <span class="badge bg-primary bg-gradient p-2">{{ note.subject }}</span>
-                            <span class="badge bg-dark bg-gradient p-2">{{ note.method }}</span>
-                            <span class="badge bg-gradient p-2 
-                                        {% if note.status == 'Ανοιχτό' %}bg-danger
-                                        {% elif note.status == 'Κλειστό' %}bg-success
-                                        {% elif note.status == 'Σε Εξέλιξη' %}bg-warning text-dark
-                                        {% else %}bg-danger
-                                        {% endif %}">
-                                {{ note.status }}
-                            </span>                            
-                        </h6>
-                        <p class="card-text p-3">
-                            <ol>
-                                {% for sentence in note.summary|split_sentences %}
-                                    <li>{{ sentence }}.</li>
-                                {% empty %}
-                                    <em>Χωρίς περίληψη</em>
-                                {% endfor %}
-                            </ol>                               
-                            
-                        </p>
+                            <span class="badge bg-gradient p-2 bg-primary">
+                                {{ note.subject }}
+                            </span>
+                            <span class="badge bg-gradient p-2 bg-dark text-light">
+                                {{ note.method }}
+                            </span>
+                            <span class="badge bg-gradient p-2 {{ note.status|status_clas }}">
+                                {{ note.status|status_icon|safe }} {{ note.status }}
+                            </span>
+                        </h6>                        
+                        <ol class="card-text p-3">
+                            {% for sentence in note.summary|split_sentences %}
+                                <li>{{ sentence }}.</li>
+                            {% empty %}
+                                <em>Χωρίς περίληψη</em>
+                            {% endfor %}
+                        </ol>                             
                     </div>
                 </div>
             </div>

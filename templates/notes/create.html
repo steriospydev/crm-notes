@@ -1,6 +1,7 @@
-<div class="container shadow p-4 mb-5 bg-body  text-dark border rounded rounded-3 ">               
-    <div class="row">
-        <div class="col-8">
+<div class="container shadow p-4 mb-5 bg-gradient text-dark border rounded rounded-3 "
+    style="background-color: {{ theme.bg_form }};">               
+    <div class="row align-items-center">
+        <div class="col-lg-8">
             <form method="post" class="row g-3">
                 {% csrf_token %}
                 <div class="col-md-4">                    
@@ -29,23 +30,21 @@
                     {{ form.summary.label_tag }} {{ form.summary }}
                 </div>
                 <div class="col-12 text-center">
-                    <button type="submit" class="btn btn-sm btn-outline-success">
+                    <button type="submit" class="btn btn-sm btn-success">
                         <i class="bi bi-clipboard2-plus"></i>
-                        {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Σημείωσης
+                        {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} 
                     </button>
                 
                 </div>
             </form>
         </div>
         
-        <div class="col-4 bg-gradient rounded pt-5">
-            <div class="col text-center">
-                    Αναζήτηση & Φίλτρα <i class="bi bi-search"></i></em></small>
-            </div>
-            <hr class="my-3 border border-dark opacity-50">
+        <div class="col-lg-4 rounded mt-2 rounded-3 px-3"
+        >
             
-            <form method="get" class="row g-1 align-items-center justify-content-end">
-                <div class="col-12 align-self-end">
+            <form method="get" class="row g-1 align-items-center  py-4 justify-content-center"
+            style="background-color: {{ theme.bg_note }};">
+                <div class="col-8 align-self-end">
                     <select class="form-select" name="method" aria-label="Τρόπος Επικοινωνίας">
                         <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
                         <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
@@ -55,7 +54,7 @@
                         <option value="Άλλο" {% if request.GET.method == 'Άλλο' %}selected{% endif %}>Άλλο</option>
                     </select>
                 </div>
-                <div class="col-12 align-self-end">
+                <div class="col-8 align-self-end">
                     <select class="form-select" name="status" aria-label="Κατάσταση">
                         <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
                         <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
@@ -63,7 +62,7 @@
                         <option value="Κλειστό" {% if request.GET.status == 'Κλειστό' %}selected{% endif %}>Κλειστό</option>
                     </select>
                 </div>
-                <div class="col-12 align-self-end">
+                <div class="col-8 align-self-end">
 
                     <input
                     class="form-control"
@@ -74,7 +73,7 @@
                     value="{{ request.GET.search|default_if_none:'' }}"
                     />
                 </div>
-                <div class="col align-self-end text-center pt-3">
+                <div class="col-8 align-self-end text-center py-3">
                     <button type="submit" 
                         class="btn btn-sm btn-primary">
                         <i class="bi bi-filter"></i>Φιλτράρισμα</button>
