@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from config.misc import (TimeStampedModel, TIN_REGEX, PHONE_REGEX, EMAIL_REGEX,
-                         STATUS_CHOICES, SUBJECT_CHOICES, COMMUNICATION_METHODS)
-
+                         
+from tools.models import TimeStampedModel
+from tools.constants import STATUS_CHOICES, SUBJECT_CHOICES, COMMUNICATION_METHODS
+from tools.constants import TIN_REGEX, PHONE_REGEX, EMAIL_REGEX
 from .manager import NoteManager, ContactManager
 
 User = get_user_model()

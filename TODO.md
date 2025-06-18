@@ -2,6 +2,7 @@
 ### Pages
 - User main dashboard.html (widgets and tables)
 - User main
+- Contact Pages
 ## BACKEND
 - User Profile 
 
@@ -16,6 +17,7 @@
 
 ### Note
 - make subject separate model Subject
+
 
 ### Alarm
 - IMPLEMENT: ALARM SYSTEM USER

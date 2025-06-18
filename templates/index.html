@@ -9,11 +9,8 @@
         <!-- Page Header --> {% include 'notes/header.html' with note_to_update=note_to_update %}
         <!-- Modal --> {% include 'components/contact_form.html' with form=contact_form %}
         <!-- Messages --> {% include 'components/messages.html' with messages=messages %}
-
         <!-- Δημιουργία Σημείωσης --> {% include 'notes/create.html' with form=form %}
-
         <!-- Λίστα Σημειώσεων --> {% include 'notes/list.html' with notes=notes %}
-
         <!-- Πλοήγηση Σελίδων --> 
          {% if is_paginated %}
             <nav>
@@ -38,6 +35,5 @@
                 </ul>
             </nav>
         {% endif %}
-     
     </div>
 {% endblock %}
