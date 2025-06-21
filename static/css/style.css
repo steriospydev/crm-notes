@@ -1,0 +1,107 @@
+:root {
+    --breadcrumb-divider: '>'; 
+/* Blue Theme */
+/*
+  --navbar-color: #1B262C;
+  --main-color: #0F4C75;
+  --container-color: #0F4C75;
+  --form-note-color: #BBE1FA;
+  --breadcrumb-color: #0F4C75; 
+  --text-color :#393f44; 
+*/
+
+/* Green Theme */
+
+  --navbar-color: #819A91;
+  --main-color: #A7C1A8;
+  --container-color: #A7C1A8;
+  --form-note-color: #EEEFE0;
+  --breadcrumb-color: #EEEFE0; 
+  --text-color :#36454F;
+
+  
+/* Purple */
+/*
+  --navbar-color: #070F2B;
+  --main-color: #1B1A55;
+  --container-color: #1B1A55;
+  --form-note-color: #9290C3;
+  --breadcrumb-color: #9290C3;
+  --text-color :#FAEBD7; 
+*/
+
+/*white  */
+/* 
+  --navbar-color: #000000;
+  --main-color: #F2F2F2;
+  --container-color: #EAE4D5;
+  --form-note-color: #B6B09F;
+  --breadcrumb-color: #FFCC00;
+  --text-color:#2b2929;  
+*/
+
+/* 
+  --navbar-color: #222831;
+  --main-color: #393E46;
+  --container-color: #fdedacde;
+  --form-note-color: #393E46;
+  --breadcrumb-color: #ffd83c;
+  --text-color:#f2f2f2;
+  */
+}
+
+.span-theme{
+  /* background-color: var(--container-color); */
+  color:var(--text-color)
+}
+.link-theme {
+  background-color: var(--form-note-color);
+  color:var(--text-color);
+  border: 1px solid;
+  border-radius: 1rem;
+  
+}
+
+.link-theme:hover {
+background-color: var(--main-color);
+  color:var(--form-note-color);
+}
+.navbar_color {
+  background-color: var(--navbar-color);
+  color:var(--text-color)
+}
+
+.main_color {
+  background-color: var(--main-color);
+}
+
+.container_color {
+  background-color: var(--container-color);
+  border-radius: 1.5rem; /* or any value you want, e.g. 8px */
+}
+
+.formNote_color {
+  color: var(--text-color);
+  background-color: var(--form-note-color);
+      border-radius: 1.5rem; /* or any value you want, e.g. 8px */
+}
+.breadcr {
+  --bs-breadcrumb-divider: var(--breadcrumb-divider);
+  color: var(--breadcrumb-color);
+}
+.link_color{
+  background-color: var(--form-note-color);
+  color: var(--container-color);
+}
+.hover-pop {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-pop:hover,
+.hover-pop:focus,
+.hover-pop:focus-within {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  outline: none; /* optional: remove outline */
+}

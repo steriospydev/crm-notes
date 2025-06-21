@@ -5,3 +5,5 @@ mogrations
 __pycache__
 send/
 send.*
+
+static_cdn/

@@ -28,8 +28,9 @@ class Contact(TimeStampedModel):
         verbose_name = 'Επαφή'
         verbose_name_plural = 'Επαφές'
         unique_together = ['first_name', 'last_name', 'company', 'user']
+        ordering = ['last_name']
 
     def __str__(self):
-        fullname = f'{self.first_name} {self.last_name}'
+        fullname = f'{self.last_name} {self.first_name}'
         display = f'{fullname} - {self.company}' if self.company else fullname
         return display

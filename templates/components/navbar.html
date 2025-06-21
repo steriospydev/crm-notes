@@ -1,12 +1,10 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-gradient" 
-style="background-color: {{ theme.bg_navbar }};color: {{ theme.text_navbar }};">
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient navbar_color">
   <div class="container p-2">
     <a class="navbar-brand d-flex align-items-center" href="{% url 'notes:index' %}">
       <img src="{% static 'images/logo.png' %}"
        alt="" width="60" height="34"
        class="d-inline-block align-text-top rounded me-2  rounded-circle">
-
       {% if user.is_authenticated %}{{user.first_name}} {{ user.last_name}}{% else %}CRM{% endif %}
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,15 +18,16 @@ style="background-color: {{ theme.bg_navbar }};color: {{ theme.text_navbar }};">
           href="{% url 'notes:index' %}">Σημειώσεις</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Επαφές</a>
-        </li>        
+          <a class="nav-link" href="#">Ειδοποιήσεις</a>
+        </li>       
+          
         {% endif %}
       </ul>
         {% if user.is_authenticated %}
      
           <form method="post" action="{% url 'logout' %}">
              {% csrf_token %}
-             <button type="submit" class="btn btn-danger">Αποσύνδεση, {{user.username}}</button>
+             <button type="submit" class="btn btn-danger  bg-gradient"><i class="bi bi-power"></i>Αποσύνδεση</button>
           </form>
         
         {% endif %}

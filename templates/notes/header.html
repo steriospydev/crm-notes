@@ -1,15 +1,17 @@
 <div class="row">
     <div class="col-8">
         {% if note_to_update %}                  
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <nav class="breadcr" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">
+                    <li class="breadcrumb-item"><a  class="text-light" href="#">
                         {{ note_to_update.contact}}</a></li>
                     <li class="breadcrumb-item">
                         {{ note_to_update.created }}</li>
 
                     <li class="breadcrumb-item" aria-current="page">
                         {{ note_to_update.shortcode }}</li>
+                    <li class="breadcrumb-item">
+                        {{ note_to_update.updated }}</li>
                 </ol>
             </nav>                
         {% endif %}            

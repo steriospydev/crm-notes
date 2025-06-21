@@ -40,3 +40,31 @@ navbar
 
 
 
+## Database
+psql --version
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+sudo -u postgres psql
+
+CREATE USER myuser WITH PASSWORD 'mypassword';
+CREATE DATABASE mydb OWNER myuser;
+ALTER ROLE noteAdmin SET client_encoding TO 'utf8';
+ALTER ROLE noteAdmin SET default_transaction_isolation TO 'read committed';
+ALTER ROLE noteAdmin SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE mydb TO myuser;
+
+
+# DATABASE
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432'),
+    }
+}

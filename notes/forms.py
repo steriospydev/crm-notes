@@ -1,8 +1,8 @@
 from django import forms
-
 from contact.models import Contact
 
 from .models import Note
+
 
 class NoteForm(forms.ModelForm):
     class Meta:
@@ -14,7 +14,7 @@ class NoteForm(forms.ModelForm):
             'subject': forms.Select(attrs={'class': 'form-select'}),
             'summary': forms.Textarea(attrs={
                 'class': 'form-control rounded rounded-3',
-                'rows': 6,
+                'rows': 3,
                 'placeholder': 'Πληκτρολογήστε τις σημειώσεις σας εδώ...'
             }),
             'status': forms.Select(attrs={'class': 'form-select'}),
