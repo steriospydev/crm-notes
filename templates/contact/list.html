@@ -1,0 +1,56 @@
+{% load static %}
+{% load none_filters %}
+
+<div class="container-fluid container_color pb-2 mt-3 mb-3 ">
+    <div class="row gy-2 shadow-sm p-1 mb-5 rounded ">   
+        <div class="col">
+            {{ contacts }}
+        </div>
+    </div>
+</div>
+
+
+        <!--{% for contact in contacts %}
+             <div class="col-lg-6 col-md-12 col-sm-12  ">
+                <div class="card  mb-3 h-100 hover-pop formNote_color bg-gradient">
+                    <div class="card-body  "
+                    >
+                        <div class="row p-2">                    
+                            <div class="col-lg-12">
+                                
+                                <h5 class="card-title  d-flex justify-content-between align-items-center">                                    
+                                    {{ contact.first_name }} {{ contact.last_name }} ({{ contact.company|show_default:'N/A' }})
+                                </span>
+                                </h5>                                
+                            </div>
+                        </div>                        
+                        <h6 class="card-subtitle my-2">                            
+                            <em>{{ contact.user.first_name }} - {{ contact.created|date:"d/m/Y" }}</em>
+                            <a class="btn btn-sm ms-3
+                                link-theme fw-bold bg-gradient rounded-3"
+                                    href="{{ note.get_absolute_url }}"><em>
+                                    <i class="bi bi-pencil-square">Επεξεργασία</i>
+                                        </em>
+                                </a>                    
+
+                            <a class="btn btn-sm
+                                link-theme fw-bold bg-gradient rounded-3"
+                                    href="#">
+                                    <i class="bi bi-note"></i>
+                                        <em>Σημειώσεις</em>
+                                </a>                   
+                            
+                        </h6>
+
+                        <ul class="card-text ">
+                          <li class="">                              
+                                <strong>Τηλέφωνο:</strong>
+                             {{ contact.phone_number|show_default }}
+                          </li>
+                        </ul>                             
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">Δεν υπάρχουν επαφές.</div>
+        {% endfor %}   -->

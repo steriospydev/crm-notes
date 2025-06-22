@@ -1,17 +1,15 @@
 {% extends "base.html" %}
-{% load note_extras %}
+{% load static %}
 
 {% block title %} Ημερολόγιο Επικοινωνίας {% endblock %}
 
 {% block content %}
     <!-- APP -->
     <div class="container my-4">
-        <!-- Page Header --> {% include 'notes/header.html' with note_to_update=note_to_update %}
-        <!-- Modal --> {% include 'components/contact_form.html' with form=contact_form %}
+        <!-- Page Header --> {% include 'contact/header.html' with note_to_update=note_to_update %}
         <!-- Messages --> {% include 'components/messages.html' with messages=messages %}
-        <!-- Δημιουργία Σημείωσης --> {% include 'notes/create.html' with form=form %}
-        
-        <!-- Λίστα Σημειώσεων --> {% include 'notes/list.html' with notes=notes %}
+        <!-- Δημιουργία Σημείωσης --> {% include 'contact/form.html' with form=form %}
+        <!-- Λίστα Σημειώσεων --> {% include 'contact/list.html' with notes=notes %}
         <!-- Πλοήγηση Σελίδων --> 
         {% if is_paginated %}
         <div class="container my-2 ">

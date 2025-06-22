@@ -1,0 +1,77 @@
+<div class="container container_color shadow p-3 pb bg-gradient text-darK">               
+    <div class="row align-items-center mx-2">
+        <div class="col-lg-12 hover-pop p-3 mb-3 formNote_color bg-gradient">            
+            <form method="post" class="row ">
+
+                {% csrf_token %}
+                <div class="col-lg-4">                    
+                    <span class="badge span-theme bg-gradient mb-2"> {{ form.first_name.label_tag }}</span>
+                    <br>
+                    {{ form.first_name }}
+                </div>
+                <div class="col-lg-4">
+                    
+                    <span class="badge span-theme bg-gradient mb-2">{{ form.last_name.label_tag }} </span>
+                    <br>
+                    {{ form.last_name }}
+                </div>
+                <div class="col-lg-4">
+                    <span class="badge span-theme bg-gradient mb-2">Εταιρεία: </span>
+                    <br> 
+                    {{ form.company }}                
+                </div>
+                <div class="col-lg-4">
+                    <span class="badge span-theme bg-gradient mb-2">{{ form.phone_number.label_tag }} </span>
+                    <br> 
+                    {{ form.phone_number }}                
+                </div>
+                <div class="col-lg-4">
+                    <span class="badge span-theme bg-gradient mb-2">{{ form.email.label_tag }} </span>
+                    <br> 
+                    {{ form.email }}                
+                </div>
+                <div class="col-lg-4">
+                    <span class="badge span-theme bg-gradient mb-2">{{ form.tin_number.label_tag }} </span>
+                    <br> 
+                    {{ form.tin_number }}                
+                </div>
+                <div class="col-lg-8 bg-primary">
+                        <span class="badge span-theme bg-gradient">{{ form.summary.label_tag }} </span>
+                        <br>
+                        {{ form.summary }}
+                </div>
+                <div class="col-lg-4 bg-dark">
+                    <button type="submit" class="btn btn fw-bold btn-success">
+                        <i class="bi bi-clipboard2-plus"></i>
+                        {% if contact_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Επαφής
+                    </button>
+                
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-12">            
+            <form method="get" 
+            class="row  p-3 g-0 hover-pop bg-gradient formNote_color">
+            <div class="input-group flex-nowrap">
+
+                <button type="submit" 
+                        class="btn btn-sm  btn-success bg-primary fw-bold">
+                        <i class="bi bi-filter"></i>Αναζητηση</button>
+                <input
+                    class="form-control"
+                    type="search"
+                    name="search"
+                    placeholder="Αναζητηση Επαφής"
+                    aria-label="Search"
+                    value="{{ request.GET.search|default_if_none:'' }}"
+                    />
+            
+            </div>
+            
+            </form>
+
+            
+        </div>
+    </div>
+</div>

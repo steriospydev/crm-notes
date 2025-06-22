@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+
+
 from tools.constants import TIN_REGEX, PHONE_REGEX, EMAIL_REGEX
 from tools.models import TimeStampedModel
 from .manager import ContactManager
@@ -34,3 +37,6 @@ class Contact(TimeStampedModel):
         fullname = f'{self.last_name} {self.first_name}'
         display = f'{fullname} - {self.company}' if self.company else fullname
         return display
+
+    def get_absolute_url(self):
+        return reverse('contact:contact-update', kwargs={'pk': self.pk})

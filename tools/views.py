@@ -8,6 +8,7 @@ from contact.forms import ContactForm
 from notes.models import Note
 from notes.forms import NoteForm
 
+
 class NoteFormListView(LoginRequiredMixin, FormMixin, ListView):
     model = Note
     template_name = 'index.html' 

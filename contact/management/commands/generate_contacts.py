@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         created = 0
-        for _ in range(30000):
+        for _ in range(500):
             first_name = fake.first_name()
             last_name = fake.last_name()
             company = fake.company() if random.choice([True, False]) else None
