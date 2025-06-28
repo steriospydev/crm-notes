@@ -35,12 +35,12 @@
                     <br> 
                     {{ form.tin_number }}                
                 </div>
-                <div class="col-lg-8 bg-primary">
+                <div class="col-lg-12 ">
                         <span class="badge span-theme bg-gradient">{{ form.summary.label_tag }} </span>
                         <br>
                         {{ form.summary }}
                 </div>
-                <div class="col-lg-4 bg-dark">
+                <div class="col-lg-12 mt-3 text-center">
                     <button type="submit" class="btn btn fw-bold btn-success">
                         <i class="bi bi-clipboard2-plus"></i>
                         {% if contact_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Επαφής
@@ -65,8 +65,7 @@
                     placeholder="Αναζητηση Επαφής"
                     aria-label="Search"
                     value="{{ request.GET.search|default_if_none:'' }}"
-                    />
-            
+                    />            
             </div>
             
             </form>

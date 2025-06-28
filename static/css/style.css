@@ -11,13 +11,13 @@
 */
 
 /* Green Theme */
-
+/* 
   --navbar-color: #819A91;
   --main-color: #A7C1A8;
   --container-color: #A7C1A8;
   --form-note-color: #EEEFE0;
   --breadcrumb-color: #EEEFE0; 
-  --text-color :#36454F;
+  --text-color :#36454F; */
 
   
 /* Purple */
@@ -40,19 +40,20 @@
   --text-color:#2b2929;  
 */
 
-/* 
+
   --navbar-color: #222831;
   --main-color: #393E46;
   --container-color: #fdedacde;
   --form-note-color: #393E46;
   --breadcrumb-color: #ffd83c;
   --text-color:#f2f2f2;
-  */
+  --span-color: #0a0a0a;
+ 
 }
 
 .span-theme{
-  /* background-color: var(--container-color); */
-  color:var(--text-color)
+  background-color: var(--breadcrumb-color);
+  color:var(--span-color)
 }
 .link-theme {
   background-color: var(--form-note-color);
