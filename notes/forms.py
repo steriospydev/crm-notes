@@ -9,15 +9,15 @@ class NoteForm(forms.ModelForm):
         model = Note
         fields = ['contact', 'method', 'subject', 'summary', 'status']
         widgets = {
-            'contact': forms.Select(attrs={'class': 'form-select'}),
-            'method': forms.Select(attrs={'class': 'form-select'}),
-            'subject': forms.Select(attrs={'class': 'form-select'}),
+            'contact': forms.Select(attrs={'class': 'form-select input_style'}),
+            'method': forms.Select(attrs={'class': 'form-select input_style'}),
+            'subject': forms.Select(attrs={'class': 'form-select input_style'}),
             'summary': forms.Textarea(attrs={
-                'class': 'form-control rounded rounded-3',
+                'class': 'form-control input_style',
                 'rows': 3,
                 'placeholder': 'Πληκτρολογήστε τις σημειώσεις σας εδώ...'
             }),
-            'status': forms.Select(attrs={'class': 'form-select'}),
+            'status': forms.Select(attrs={'class': 'form-select input_style'}),
         }
 
     def __init__(self, *args, **kwargs):

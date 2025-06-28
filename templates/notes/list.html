@@ -11,27 +11,31 @@
                         <div class="row p-2">                    
                             <div class="col-lg-12">
                                 
-                                <h5 class="card-title  d-flex justify-content-between align-items-center">                                    
+                                <h5 class="card-title">                                    
+                                    <span class="badge badge-sm {{ note.status|status_clas }} "> </span>
                                     {{ note.contact }}
-                                    <span class="badge bg-gradient badge-sm rounded rounded-3  {{ note.status|status_clas }}">
-                                {{ note.status|status_icon|safe }} {{ note.status }}
-                                </span>
+                                <em class="status_text">
+                                    {{ note.status|safe }}
+                                </em>
+                                
+
+                                    
                                 </h5>                                
                             </div>
                         </div>
                         
                         <h6 class="card-subtitle my-2">                            
                             <em>{{ note.user.first_name }} - {{ note.created|date:"d/m/Y H:i" }}</em>
-                            <span class="badge bg-gradient p-2 ms-2 span-theme ">
+                            <span class="badge bg-gradient p-2 ms-2 label_color ">
                                 {{ note.subject }}
                             </span>
-                            <span class="badge p-2 bg-gradient bg-gradient bg-success ">
+                            <span class="badge p-2 bg-gradient label_color">
                                 {{ note.method }}
                             </span>                            
                             {% if note.user == request.user %}
 
                                 <a class="btn btn-sm
-                                btn-primary fw-bold bg-gradient rounded-3"
+                                detail_color fw-bold bg-gradient"
                                     href="{{ note.get_absolute_url }}">
                                     <i class="bi bi-pencil-square"></i>
                                         <em>{{ note.shortcode }}</em>

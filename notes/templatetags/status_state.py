@@ -5,9 +5,9 @@ register = template.Library()
 @register.filter
 def status_clas(status):
     return {
-        'Ανοιχτό': 'bg-danger',
-        'Κλειστό': 'bg-success',
-        'Σε Εξέλιξη': 'bg-warning text-dark'
+        'Ανοιχτό': 'open_class',
+        'Κλειστό': 'close_class',
+        'Σε Εξέλιξη': 'on_class'
     }.get(status, 'bg-secondary')
 
 @register.filter

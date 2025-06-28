@@ -20,7 +20,7 @@ class ContactForm(forms.ModelForm):
                                                    'id' :'phone_number', 'placeholder': 'Τηλέφωνο'}),
             'email': forms.TextInput(attrs={'class': 'form-input',
                                             'id' :'email', 'placeholder': 'Email'}),
-            'tin_number': forms.TextInput(attrs={'class': 'form-input',
+            'tin_number': forms.TextInput(attrs={'class': 'form-input input_style',
                                                  'id' :'tin_number',
                                                   'placeholder': 'ΑΦΜ'}),
             'summary': forms.Textarea(attrs={'class': 'form-input', 

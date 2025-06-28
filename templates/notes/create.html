@@ -1,67 +1,25 @@
 <div class="container container_color shadow p-3 pb bg-gradient text-darK">               
     <div class="row align-items-center mx-2">
-        <div class="col-lg-8 hover-pop formNote_color bg-gradient">            
-            <form method="post" class="row g-3 py-3 mx-3">
-                {% csrf_token %}
-                <div class="col-md-4">                    
-                    <span class="badge span-theme bg-gradient mb-2"> {{ form.subject.label_tag }}</span>
-                    {{ form.subject }}
-                </div>
-                <div class="col-md-4">
-                    
-                    <span class="badge span-theme bg-gradient mb-2">{{ form.method.label_tag }} </span>
-                    {{ form.method }}
-                </div>
-                <div class="col-md-4">
-                    <span class="badge span-theme bg-gradient mb-2">{{ form.status.label_tag }}</span>
-                    {{ form.status }}
-                </div>
-                
-                <div class="col-md-6">
-                    <span class="badge span-theme bg-gradient mb-2">{{ form.contact.label_tag }} </span>
-                     {{ form.contact }}                
-                </div>
-                <div class="col-md-6 pt-4 mt-4">
-                    
-                    <button type="button" class="btn btn-sm link-theme bg-gradient"
-                            data-bs-toggle="modal" data-bs-target="#contactModal">
-                        <i class="bi bi-person-add"></i> Προσθήκη Επαφής
-                    </button>
-                </div>
-
-                <div class="col-12">
-                        <span class="badge span-theme bg-gradient mb-2">{{ form.summary.label_tag }} </span>
-                        {{ form.summary }}
-                </div>
-                <div class="col-12 text-center">
-                    <button type="submit" class="btn btn fw-bold btn-success">
-                        <i class="bi bi-clipboard2-plus"></i>
-                        {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Σημείωσης
-                    </button>
-                
-                </div>
-            </form>
-        </div>
-
         <div class="col-lg-4">            
             <div class="row my-3">
                 <div class="col ">
                     <div class="btn-group w-100" role="group" aria-label="Basic example">
-                <button type="button" class="btn link-theme  bg-gradient btn-md">
+                <button type="button" class="btn filter_color btn-sm fw-bold">
                     Επαφές</button>
-                <button type="button" class="btn link-theme bg-gradient btn-md">
+                <button type="button" class="btn filter_color btn-sm fw-bold">
                     Θέμα</button>
-                <button type="button" class="btn link-theme bg-gradient btn-md">
+                <button type="button" class="btn filter_color btn-sm fw-bold">
                     Εμφάνιση</button>
-            </div>
-
                 </div>
+
             </div>
+        </div>
             
-            <form method="get" 
+        <form method="get" 
             class="row  g-2 hover-pop bg-gradient formNote_color p-2 justify-content-center">
                 <div class="col-8">
-                    <select class="form-select" name="method" aria-label="Τρόπος Επικοινωνίας">
+
+                    <select class="form-select input_style" name="method" aria-label="Τρόπος Επικοινωνίας">
                         <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
                         <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
                         <option value="Γραφείο" {% if request.GET.method == 'Γραφείο' %}selected{% endif %}>Γραφείο</option>
@@ -71,7 +29,7 @@
                     </select>
                 </div>
                 <div class="col-8">
-                    <select class="form-select" name="status" aria-label="Κατάσταση">
+                    <select class="form-select input_style" name="status" aria-label="Κατάσταση">
                         <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
                         <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
                         <option value="Σε Εξέλιξη" {% if request.GET.status == 'Σε Εξέλιξη' %}selected{% endif %}>Σε εξέλιξη</option>
@@ -80,7 +38,7 @@
                 </div>
                 <div class="col-8">
                     <input
-                    class="form-control"
+                    class="form-control input_style"
                     type="search"
                     name="search"
                     placeholder="Αναζητηση Επαφής"
@@ -90,13 +48,57 @@
                 </div>
                 <div class="col-8  mt-3 w-100 text-center">
                     <button type="submit" 
-                        class="btn btn-sm btn-success bg-primary fw-bold">
+                        class="btn btn-sm filter_color fw-bold">
                         <i class="bi bi-filter"></i>Φιλτράρισμα</button>
                 </div>
             
-            </form>
+        </form>
 
             
+    </div>
+        <div class="col-lg-8 hover-pop formNote_color bg-gradient">            
+            <form method="post" class="row g-3 py-3 mx-3">
+                {% csrf_token %}
+                <div class="col-md-4">                    
+                    <span class="badge label_color mb-2"> {{ form.subject.label_tag }}</span>
+                    {{ form.subject }}
+                </div>
+                <div class="col-md-4">
+                    
+                    <span class="badge label_color mb-2">{{ form.method.label_tag }} </span>
+                    {{ form.method }}
+                </div>
+                <div class="col-md-4">
+                    <span class="badge label_color mb-2">{{ form.status.label_tag }}</span>
+                    {{ form.status }}
+                </div>
+                
+                <div class="col-md-6">
+                    <span class="badge label_color mb-2">{{ form.contact.label_tag }} </span>
+                     {{ form.contact }}                
+                </div>
+                <div class="col-md-6 pt-4 mt-4">
+                    
+                    <button type="button" class="btn btn-sm create_color fw-bold bg-gradient"
+                            data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <i class="bi bi-person-add"></i> Προσθήκη Επαφής
+                    </button>
+                </div>
+
+                <div class="col-12">
+                        <span class="badge label_color mb-2">{{ form.summary.label_tag }} </span>
+                        {{ form.summary }}
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn fw-bold create_color">
+                        <i class="bi bi-clipboard2-plus"></i>
+                        {% if note_to_update %}Ανανέωση{% else %}Προσθήκη{%endif%} Σημείωσης
+                    </button>
+                
+                </div>
+            </form>
         </div>
+
+
     </div>
 </div>
