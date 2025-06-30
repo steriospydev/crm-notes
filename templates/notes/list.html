@@ -19,17 +19,20 @@
                             </div>
                         </div>
                         
-                        <h6 class="card-subtitle ">                            
-                            <em>{{ note.user.first_name }} - {{ note.created|date:"d/m/Y H:i" }}</em>
-                            <span class="badge bg-gradient p-2 ms-2 label_color ">
+                        <h6 class="card-subtitle pb-2">                            
+                            
+                            <span class="badge bg-gradient p-2 ms-3 label_color ">{{ note.user.first_name }}</span> 
+                            <span class="badge p-2 bg-gradient label_color">{{ note.created|date:"d/m/Y H:i" }}</span> 
+                            <span class="badge bg-gradient p-2 label_color ">
                                 {{ note.subject }}
                             </span>
                             <span class="badge p-2 bg-gradient label_color">
                                 {{ note.method }}
                             </span>                            
+                            
                             {% if note.user == request.user %}
 
-                                <a class="btn btn-sm
+                                <a class="btn btn-sm m-2 ms-3 
                                 detail_color fw-bold bg-gradient"
                                     href="{{ note.get_absolute_url }}">
                                     <i class="bi bi-pencil-square"></i>
