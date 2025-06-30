@@ -1,1 +1,7 @@
 # CRM - Notes
+
+## Screenshots
+- Main Page
+<img src="static/media/main_page.png" alt="Main Page">
+
+
