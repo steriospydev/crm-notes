@@ -1,10 +1,12 @@
 venv/
 .env
+
 db.sqlite3
+
 mogrations
 __pycache__
 send/
 send.*
 
 */static_cdn/*
-report.md
+docs/
