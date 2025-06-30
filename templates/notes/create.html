@@ -1,61 +1,58 @@
 <div class="container container_color shadow p-3 pb bg-gradient text-darK">               
     <div class="row align-items-center mx-2">
         <div class="col-lg-4">            
-            <div class="row my-3">
-                <div class="col ">
-                    <div class="btn-group w-100" role="group" aria-label="Basic example">
-                <button type="button" class="btn filter_color btn-sm fw-bold">
-                    Επαφές</button>
-                <button type="button" class="btn filter_color btn-sm fw-bold">
-                    Θέμα</button>
-                <button type="button" class="btn filter_color btn-sm fw-bold">
-                    Εμφάνιση</button>
-                </div>
+            <div class="row g-0">
+                <div class="col-lg-4">
 
+                </div>
+                <div class="col-lg-4">
+                    
+                </div>
+                <div class="col-lg-4">
+                    
+                </div>
             </div>
+            <form method="get" 
+                class="row g-2 hover-pop bg-gradient formNote_color p-2 ">
+                    <div class="col-lg-12">
+
+                        <select class="form-select input_style" name="method" aria-label="Τρόπος Επικοινωνίας">
+                            <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
+                            <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
+                            <option value="Γραφείο" {% if request.GET.method == 'Γραφείο' %}selected{% endif %}>Γραφείο</option>
+                            <option value="Email" {% if request.GET.method == 'Email' %}selected{% endif %}>Email</option>
+                            <option value="Έγγραφο" {% if request.GET.method == 'Έγγραφο' %}selected{% endif %}>Έγγραφο</option>
+                            <option value="Άλλο" {% if request.GET.method == 'Άλλο' %}selected{% endif %}>Άλλο</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <select class="form-select input_style" name="status" aria-label="Κατάσταση">
+                            <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
+                            <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
+                            <option value="Σε Εξέλιξη" {% if request.GET.status == 'Σε Εξέλιξη' %}selected{% endif %}>Σε εξέλιξη</option>
+                            <option value="Κλειστό" {% if request.GET.status == 'Κλειστό' %}selected{% endif %}>Κλειστό</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <input
+                        class="form-control input_style"
+                        type="search"
+                        name="search"
+                        placeholder="Αναζητηση Επαφής"
+                        aria-label="Search"
+                        value="{{ request.GET.search|default_if_none:'' }}"
+                        />
+                    </div>
+                    <div class="col-lg-12  mt-3 w-100 text-center">
+                        <button type="submit" 
+                            class="btn btn-sm filter_color fw-bold">
+                            <i class="bi bi-filter"></i>Φιλτράρισμα</button>
+                    </div>
+                
+            </form>
+
+                
         </div>
-            
-        <form method="get" 
-            class="row  g-2 hover-pop bg-gradient formNote_color p-2 justify-content-center">
-                <div class="col-8">
-
-                    <select class="form-select input_style" name="method" aria-label="Τρόπος Επικοινωνίας">
-                        <option value="" {% if not request.GET.method %}selected{% endif %}>Επικοινωνία</option>
-                        <option value="Τηλέφωνο" {% if request.GET.method == 'Τηλέφωνο' %}selected{% endif %}>Τηλέφωνο</option>
-                        <option value="Γραφείο" {% if request.GET.method == 'Γραφείο' %}selected{% endif %}>Γραφείο</option>
-                        <option value="Email" {% if request.GET.method == 'Email' %}selected{% endif %}>Email</option>
-                        <option value="Έγγραφο" {% if request.GET.method == 'Έγγραφο' %}selected{% endif %}>Έγγραφο</option>
-                        <option value="Άλλο" {% if request.GET.method == 'Άλλο' %}selected{% endif %}>Άλλο</option>
-                    </select>
-                </div>
-                <div class="col-8">
-                    <select class="form-select input_style" name="status" aria-label="Κατάσταση">
-                        <option value="" {% if not request.GET.status %}selected{% endif %}>Κατάσταση</option>
-                        <option value="Ανοιχτό" {% if request.GET.status == 'Ανοιχτό' %}selected{% endif %}>Ανοιχτό</option>
-                        <option value="Σε Εξέλιξη" {% if request.GET.status == 'Σε Εξέλιξη' %}selected{% endif %}>Σε εξέλιξη</option>
-                        <option value="Κλειστό" {% if request.GET.status == 'Κλειστό' %}selected{% endif %}>Κλειστό</option>
-                    </select>
-                </div>
-                <div class="col-8">
-                    <input
-                    class="form-control input_style"
-                    type="search"
-                    name="search"
-                    placeholder="Αναζητηση Επαφής"
-                    aria-label="Search"
-                    value="{{ request.GET.search|default_if_none:'' }}"
-                    />
-                </div>
-                <div class="col-8  mt-3 w-100 text-center">
-                    <button type="submit" 
-                        class="btn btn-sm filter_color fw-bold">
-                        <i class="bi bi-filter"></i>Φιλτράρισμα</button>
-                </div>
-            
-        </form>
-
-            
-    </div>
         <div class="col-lg-8 hover-pop formNote_color bg-gradient">            
             <form method="post" class="row g-3 py-3 mx-3">
                 {% csrf_token %}

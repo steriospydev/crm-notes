@@ -1,70 +1,23 @@
 :root {
-    --breadcrumb-divider: '>'; 
+  --breadcrumb-divider: '>'; 
 
+    /* Accent Colors */
+  --red-color: #db7169;
+  --yellow-color: #fff241;
+  --green-color: #86CB92;
+  --blue-color: #7189ff;
 
+  /* Base Colors */
+  --main-color: #ffffff; /* clean white background */
+  --navbar-color: #121212; /* darker than before for stronger contrast */
 
-/* Blue Theme */
-/*
-  --navbar-color: #1B262C;
-  --main-color: #0F4C75;
-  --container-color: #0F4C75;
-  --form-note-color: #BBE1FA;
-  --breadcrumb-color: #0F4C75; 
-  --text-color :#393f44; 
-*/
+  /* UI Elements */
+  --button-color: #e0e0e0; /* light grey, more contrast on white */
+  --form-note-color: #f5f5f5; /* lighter for a softer look on white */
 
-/* Green Theme */
-  /* --navbar-color: #819A91;
-  --main-color: #A7C1A8;
-  --container-color: #A7C1A8;
-  --form-note-color: #EEEFE0;
-  --breadcrumb-color: #EEEFE0; 
-  --text-color :#36454F;
-  --span-color: #020202;  */
-
-  
-/* Purple */
-/*
-  --navbar-color: #070F2B;
-  --main-color: #1B1A55;
-  --container-color: #1B1A55;
-  --form-note-color: #9290C3;
-  --breadcrumb-color: #9290C3;
-  --text-color :#FAEBD7; 
-*/
-
-/*white  */
-
-  /* --navbar-color: #000000;
-  --main-color: #F2F2F2;
-  --container-color: #EAE4D5;
-  --form-note-color: #B6B09F;
-  --breadcrumb-color: #FFCC00;
-  --text-color:#2b2929;  
-  --span-color: #020202; */
-
-
-  /* --navbar-color: #222831;
-  --main-color: #393E46;
-  --container-color: #fdedacde;
-  --form-note-color: #393E46;
-  --breadcrumb-color: #ffd83c;
-  --text-color:#f2f2f2;
-  --span-color: #0a0a0a;
-  */
-
-  --red-color:#db7169;
-  --yellow-color:#fff241;
-  --green-color:#86CB92;
-  --blue-color:#7189ff;
-  
-  --navbar-color: #1C3144;
-  --main-color: #FFFCFF;
-  --button-color: #cacaca;
-  --form-note-color: #E6E6E6;
-
-  --breadcrumb-color: #231B1B;
-  --text-color:#000000;
+  /* Text and Navigation */
+  --breadcrumb-color: #2b2b2b; /* improved visibility on light bg */
+  --text-color: #111111;
 
 
   /* off_button */
@@ -216,6 +169,8 @@
   background-color: var(--form-note-color);
   color: var(--container-color);
 }
+
+/* Pop over effect */
 .hover-pop {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -228,3 +183,5 @@
   z-index: 10;
   outline: none; /* optional: remove outline */
 }
+
+/* Admin Cards */

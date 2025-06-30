@@ -6,4 +6,4 @@ __pycache__
 send/
 send.*
 
-static_cdn/
+*/static_cdn/*

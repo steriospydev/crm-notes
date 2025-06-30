@@ -5,26 +5,21 @@
     <div class="row gy-2 shadow-sm p-1 mb-5 rounded ">   
         {% for note in notes %}
             <div class="col-lg-6 col-md-12 col-sm-12  ">
-                <div class="card  mb-3 h-100 hover-pop formNote_color bg-gradient">
-                    <div class="card-body  "
-                    >
+                <div class="card mb-3 h-100 hover-pop formNote_color bg-gradient">
+                    <div class="card-body">
                         <div class="row p-2">                    
-                            <div class="col-lg-12">
-                                
+                            <div class="col-lg-12">                                
                                 <h5 class="card-title">                                    
                                     <span class="badge badge-sm {{ note.status|status_clas }} "> </span>
                                     {{ note.contact }}
-                                <em class="status_text">
-                                    {{ note.status|safe }}
-                                </em>
-                                
-
-                                    
+                                    <em class="status_text">
+                                        {{ note.status|safe }}
+                                    </em>                                    
                                 </h5>                                
                             </div>
                         </div>
                         
-                        <h6 class="card-subtitle my-2">                            
+                        <h6 class="card-subtitle ">                            
                             <em>{{ note.user.first_name }} - {{ note.created|date:"d/m/Y H:i" }}</em>
                             <span class="badge bg-gradient p-2 ms-2 label_color ">
                                 {{ note.subject }}
