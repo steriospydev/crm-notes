@@ -2,23 +2,31 @@
   --breadcrumb-divider: '>'; 
 
     /* Accent Colors */
-  --red-color: #db7169;
-  --yellow-color: #fff241;
-  --green-color: #86CB92;
-  --blue-color: #7189ff;
-
-  /* Base Colors */
+  --red-color: #DE6C83;
+  --yellow-color: #FCFF6C;
+  --green-color: #00A878;
+  --blue-color: #6C91C2;
+  
+/* 
   --main-color: #f5f5f5; 
-  --navbar-color: #121212; 
-
-  /* UI Elements */
+  --navbar-text: #EFECCA;
   --button-color: #e0e0e0; 
-  --form-note-color: #f5f5f5; 
+  --form-note-color: #f5f5f5;
 
-  /* Text and Navigation */
   --breadcrumb-color: #2b2b2b;
-  --text-color: #111111;
+  --text-color: #111111; 
+  --navbar-color: #121212;  */
 
+  /* Dark */
+  
+  --main-color: #202030; 
+  --navbar-text: #5D737E;
+  --button-color: #5D737E;   
+  --form-note-color: #202030; 
+
+  --breadcrumb-color: #CAD2C5;
+  --text-color: #F8F4F9;  
+  --navbar-color: #F8F4F9; 
 
   /* off_button */
   --off-button:var(--red-color);
@@ -45,7 +53,7 @@
   --detail-bg-color: var(--button-color);
   --detail-bg-color-hover: var(--yellow-color);
   --detail-color:  var(--navbar-color);
-  --detail-color-hover: var(--text-color);
+  --detail-color-hover: var(--navbar-text);
 }
 
 
@@ -104,15 +112,15 @@
   transition: ease-in-out .2s;
 }
 .off_button{
-  background-color: var(--create-bg-color);
+  background-color: var(--off-button);
   color: var(--create-color);
   border-radius: 1em;
   border: 1px solid;
 }
 
 .off_button:hover{
-  background-color: var(--off-button);
-  color:var(--create-color-hover);
+  background-color: var(--create-bg-color);
+  color:var(--breadcrumb-color);
   transition: ease-in-out .2s;
 }
 
@@ -160,7 +168,13 @@
 }
 .navbar_color {
   background-color: var(--navbar-color);
-  color:var(--text-color)
+  
+}
+.navbar_link{
+color:var(--navbar-text)
+}
+.navbar_link:hover{
+color:var(--blue-color)
 }
 
 .main_color {
@@ -203,8 +217,8 @@
 /* Admin Cards */
 .fixed-badge {
     display: inline-block;
-    background-color: var(--button-color);
-    color: var(--navbar-color);
+    background-color: var(--form-note-color);
+    color: var(--text-color);
     min-width: 4.5em;
     text-align: center;
     font-variant-numeric: tabular-nums; /* Makes digits align better */

@@ -1,10 +1,10 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-gradient navbar_color">
+<nav class="navbar navbar-expand-lg bg-gradient navbar_color">
   <div class="container p-2">
-    <a class="navbar-brand d-flex align-items-center" href="{% url 'notes:index' %}">
+    <a class="navbar-brand d-flex navbar_link align-items-center" href="{% url 'notes:index' %}">
       <img src="{% static 'images/logo.png' %}"
        alt="" width="60" height="34"
-       class="d-inline-block align-text-top rounded me-2  rounded-circle">
+       class="d-inline-block align-text-top rounded me-2 rounded-circle">
       {% if user.is_authenticated %}{{user.first_name}} {{ user.last_name}}{% else %}CRM{% endif %}
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,11 +14,11 @@
       <ul class="navbar-nav me-auto mx-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" 
+          <a class="nav-link navbar_link {% if request.path == '/' %}active{% endif %}" aria-current="page" 
           href="{% url 'notes:index' %}">Σημειώσεις</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact:index' %}">Επαφές</a>
+          <a class="nav-link  navbar_link" href="{% url 'contact:index' %}">Επαφές</a>
         </li>       
           
         {% endif %}
@@ -27,7 +27,8 @@
      
           <form method="post" action="{% url 'logout' %}">
              {% csrf_token %}
-             <button type="submit" class="btn off_button bg-gradient"><i class="bi bi-power"></i>Αποσύνδεση</button>
+             <button type="submit" class="btn off_button fw-bold bg-gradient">
+              <i class="bi bi-power"></i>Έξοδος</button>
           </form>
         
         {% endif %}
