@@ -27,7 +27,7 @@
      
           <form method="post" action="{% url 'logout' %}">
              {% csrf_token %}
-             <button type="submit" class="btn btn-outline-danger  bg-gradient"><i class="bi bi-power"></i>Αποσύνδεση</button>
+             <button type="submit" class="btn off_button bg-gradient"><i class="bi bi-power"></i>Αποσύνδεση</button>
           </form>
         
         {% endif %}

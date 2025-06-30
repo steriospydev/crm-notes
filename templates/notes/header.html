@@ -18,9 +18,10 @@
     </div>
     <div class="col-4 text-end">
         {% if note_to_update %}
-        <form method="post" class="mb-1" action="{% url 'notes:note-delete' note_to_update.pk %}">
+        <form method="post" class="mb-1" 
+        action="{% url 'notes:note-delete' note_to_update.pk %}">
             {% csrf_token %}
-            <button type="submit" class="btn  btn-sm">Διαγραφή</button>
+            <button type="submit" class="btn off_button btn-sm">Διαγραφή</button>
         </form>                        
     {% endif %}
     </div>            

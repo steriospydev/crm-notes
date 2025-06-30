@@ -8,19 +8,20 @@
   --blue-color: #7189ff;
 
   /* Base Colors */
-  --main-color: #ffffff; /* clean white background */
-  --navbar-color: #121212; /* darker than before for stronger contrast */
+  --main-color: #f5f5f5; 
+  --navbar-color: #121212; 
 
   /* UI Elements */
-  --button-color: #e0e0e0; /* light grey, more contrast on white */
-  --form-note-color: #f5f5f5; /* lighter for a softer look on white */
+  --button-color: #e0e0e0; 
+  --form-note-color: #f5f5f5; 
 
   /* Text and Navigation */
-  --breadcrumb-color: #2b2b2b; /* improved visibility on light bg */
+  --breadcrumb-color: #2b2b2b;
   --text-color: #111111;
 
 
   /* off_button */
+  --off-button:var(--red-color);
   /* labels */
    
   --label-color: var(--text-color);
@@ -28,7 +29,7 @@
   /* status */
   --status-open: var(--green-color);
   --status-close:var(--red-color);
-  --status-on:var(--green-color);
+  --status-on:var(--yellow-color);
   --status-text-color:var(--text-color);
   /* Buttons */
   --create-bg-color: var(--button-color);
@@ -102,6 +103,20 @@
   color:var(--detail-color-hover);
   transition: ease-in-out .2s;
 }
+.off_button{
+  background-color: var(--create-bg-color);
+  color: var(--create-color);
+  border-radius: 1em;
+  border: 1px solid;
+}
+
+.off_button:hover{
+  background-color: var(--off-button);
+  color:var(--create-color-hover);
+  transition: ease-in-out .2s;
+}
+
+
 .create_color {
   background-color: var(--create-bg-color);
   color:var(--create-color);
@@ -118,6 +133,7 @@
 }
 
 .create_color:hover{
+
   background-color: var(--create-bg-color-hover);
   color:var(--create-color-hover);
   transition: ease-in-out .2s;
@@ -185,3 +201,11 @@
 }
 
 /* Admin Cards */
+.fixed-badge {
+    display: inline-block;
+    background-color: var(--button-color);
+    color: var(--navbar-color);
+    min-width: 4.5em;
+    text-align: center;
+    font-variant-numeric: tabular-nums; /* Makes digits align better */
+}
